@@ -136,8 +136,8 @@ name 이란 변수를 선언하고 'Harry' 라는 데이터를 할당하였다. 
 
 ```
 let gryffindor = {
-    room : 1,
-    name : 'Harry Potter'
+    room: 1,
+    name: 'Harry Potter'
 };
 ```
 
@@ -191,8 +191,8 @@ let gryffindor = {
 
 ```
 let gryffindor = {
-    room : 1,
-    name : 'Harry Potter'
+    room: 1,
+    name: 'Harry Potter'
 };
 
 gryffindor.room = 2;
@@ -220,8 +220,8 @@ griffindor의 room 프로퍼티에 값을 변경하려고 2를 새로 할당하�
 
 ```
 let griffindor = {
-    password : 1234,
-    passwords : [1234, 4679, 5342]
+    password: 1234,
+    passwords: [1234, 4679, 5342]
 };
 ```
 
