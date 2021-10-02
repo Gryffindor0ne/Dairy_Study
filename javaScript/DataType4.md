@@ -24,7 +24,7 @@
 
 - 다음의 예시를 살펴보자.
 
-```
+```js
 const player = {
   name: "Harry",
   number: 1,
@@ -40,10 +40,8 @@ const changeName = function (player, newName) {
 
 const player2 = changeName(player, "Ron");
 
-
-console.log(player.name, player2.name);  // Ron Ron
-console.log(player === player2);         // true
-
+console.log(player.name, player2.name); // Ron Ron
+console.log(player === player2); // true
 ```
 
 <br>
@@ -58,6 +56,7 @@ console.log(player === player2);         // true
 
 - player와 player2의 값은 같은 주소값을 가리키고 있기 때문에
   위의 함수 changeName를 사용하면 해당 주소값에 연결된 데이터 객체가 변경된다.
+
   객체 내부의 프로퍼티만 바꾸는 참조형 데이터의 가변성의 예라고 볼 수 있다.
 
 <br>
@@ -70,7 +69,7 @@ console.log(player === player2);         // true
 
 - 다음은 객체 가변성을 해결하는 불변 객체를 만드는 예시이다.
 
-```
+```js
 const player = {
   name: "Harry",
   number: 1,
@@ -89,9 +88,8 @@ const changeName = function (player, newName) {
 
 const player2 = changeName(player, "Ron");
 
-console.log(player.name, player2.name);  // Harry, Ron
-console.log(player === player2);         // false
-
+console.log(player.name, player2.name); // Harry, Ron
+console.log(player === player2); // false
 ```
 
 - 위와 같이 코드를 수정하면,
@@ -104,27 +102,27 @@ console.log(player === player2);         // false
 
 > 그래서 불변 객체를 만드는 방법 중 많이 사용되는 것이 `얕은 복사`를 하는 방법이다.
 
-```
+```js
 const copyObject = function (item) {
- const result = {};
- for (const key in item) {
-   result[key] = item[key];
- }
- return result;
+  const result = {};
+  for (const key in item) {
+    result[key] = item[key];
+  }
+  return result;
 };
 
 const player = {
- name: "Harry",
- number: 1,
- playSports: "Quidditch",
- position: "Seeker",
+  name: "Harry",
+  number: 1,
+  playSports: "Quidditch",
+  position: "Seeker",
 };
 
 const player2 = copyObject(player);
 player2.name = "Ron";
 
-console.log(player.name, player2.name);  // Harry Ron
-console.log(player === player2);         // false
+console.log(player.name, player2.name); // Harry Ron
+console.log(player === player2); // false
 ```
 
 <br>
@@ -135,7 +133,7 @@ console.log(player === player2);         // false
 
 <br>
 
-```
+```js
 const player = {
   name: "Harry",
   number: 1,
@@ -146,8 +144,6 @@ const player = {
 const player2 = Object.assign({}, player);
 player2.name = "Ron";
 
-
-console.log(player.name, player2.name);  // Harry Ron
-console.log(player === player2);         // false
-
+console.log(player.name, player2.name); // Harry Ron
+console.log(player === player2); // false
 ```

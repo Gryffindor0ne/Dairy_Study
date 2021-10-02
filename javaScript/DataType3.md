@@ -22,15 +22,14 @@
 
 <br>
 
-```
+```js
 let a = 10;
-
 let b = a;
 
 let obj = {
-    num: 10, str: 'String'
+  num: 10,
+  str: "String",
 };
-
 let obj2 = obj;
 ```
 
@@ -107,19 +106,17 @@ let obj2 = obj;
 
 <br>
 
-```
+```js
 let a = 10;
-
 let b = a;
 
 let obj = {
-    num: 10, str: 'String'
+  num: 10,
+  str: "String",
 };
-
 let obj2 = obj;
 
 b = 50;
-
 obj2.num = 100;
 ```
 
@@ -157,9 +154,9 @@ obj2.num = 100;
 
 <br>
 
-```
-a !== b
-obj === obj2
+```js
+a !== b;
+obj === obj2;
 ```
 
 <br>
@@ -187,21 +184,20 @@ obj === obj2
 
 <br>
 
-```
+```js
 let a = 10;
-
 let b = a;
 
 let obj = {
-    num: 10, str: 'String'
+  num: 10,
+  str: "String",
 };
-
 let obj2 = obj;
 
 b = 50;
-
 obj2 = {
-    num: 100, str: 'String'
+  num: 100,
+  str: "String",
 };
 ```
 

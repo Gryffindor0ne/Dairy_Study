@@ -10,7 +10,7 @@
 
 - 자바스크립트의 데이터 타입은 크게 2가지
 
-  ```
+  ```js
   * 기본형 (원시형) : number, string, boolean, null, undefined, symbol
 
   * 참조형 : Object
@@ -56,7 +56,7 @@
 
       <br>
 
-    ```
+    ```js
     let a;
     ```
 
@@ -78,11 +78,11 @@
 
     <br>
 
-    ```
-       let name;         // 변수 선언
-       name= 'Harry';     // 변수 할당
+    ```js
+    let name; // 변수 선언
+    name = "Harry"; // 변수 할당
 
-       let name = 'Harry';  // 변수 선언과 동시에 할당
+    let name = "Harry"; // 변수 선언과 동시에 할당
     ```
 
     위에서 변수 name을 먼저 선언하고 그 후 name이란 변수에 'Harry'라는 데이터를 할당하였다.
@@ -145,7 +145,7 @@
 
     그럼 다음의 경우는 어떠할까?
 
-```
+```js
 let Math = 90;
 let Science = 90;
 let Literature = 90;

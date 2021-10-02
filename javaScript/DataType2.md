@@ -134,10 +134,10 @@ name 이란 변수를 선언하고 'Harry' 라는 데이터를 할당하였다. 
 
 <br>
 
-```
+```js
 let gryffindor = {
-    room: 1,
-    name: 'Harry Potter'
+  room: 1,
+  name: "Harry Potter",
 };
 ```
 
@@ -189,10 +189,10 @@ let gryffindor = {
 
 다음을 살펴보자.
 
-```
+```js
 let gryffindor = {
-    room: 1,
-    name: 'Harry Potter'
+  room: 1,
+  name: "Harry Potter",
 };
 
 gryffindor.room = 2;
@@ -218,10 +218,10 @@ griffindor의 room 프로퍼티에 값을 변경하려고 2를 새로 할당하�
 
 그럼, 참조형 데이터의 프로퍼티에 다시 참조형 데이터를 할당해보면 어떻게 될까?
 
-```
+```js
 let griffindor = {
-    password: 1234,
-    passwords: [1234, 4679, 5342]
+  password: 1234,
+  passwords: [1234, 4679, 5342],
 };
 ```
 
@@ -258,8 +258,8 @@ let griffindor = {
 
 <br>
 
-```
-griffindor.passwords = 'Hogwarts'
+```js
+griffindor.passwords = "Hogwarts";
 ```
 
 <br>
