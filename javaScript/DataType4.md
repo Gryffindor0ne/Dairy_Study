@@ -129,7 +129,9 @@ console.log(player === player2); // false
 
 > 뭐, 좀 더 간단한 방법도 있다.
 
-    내장메소드 Object.assign을 쓰면 좀 더 간단한 얕은 복사가 가능하다.
+```js
+내장메소드 Object.assign을 쓰면 좀 더 간단한 얕은 복사가 가능하다.
+```
 
 <br>
 
