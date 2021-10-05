@@ -114,7 +114,7 @@ console.log(player.playSports.first, player2.playSports.first); // Squid Game Qu
 
 player2.playSports.third[1] = "";
 console.log(player.playSports.third === player2.playSports.third); // false
-console.log(player, player2); //  ["guseul chigi", "dalgona"]   third: { 0:"guseul chigi", 1:""}
+console.log(player.playSports.third, player2.playSports.third); //  ["guseul chigi", "dalgona"]   third: { 0:"guseul chigi", 1:""}
 ```
 
 - 함수 deepCopy를 사용하면 프로퍼티의 값이 object 임을 확인하며 재귀적 방법을 통해 깊은 복사를 실행할 수 있다.
