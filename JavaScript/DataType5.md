@@ -168,3 +168,99 @@ console.log(copied); // [null, null]
 ```
 
 ---
+
+## **얕은 복사**의 추가적인 예시
+
+<br>
+
+> ### Array.prototype.slice()
+
+<br>
+
+```js
+const arr = [1, 2, 3, 4];
+const copied = arr.slice();
+
+copied[3] = 9;
+
+console.log(arr === copied); // false
+console.log(arr, copied); // [1,2,3,4] [1,2,3,9]
+```
+
+- slice 메서드를 사용한 배열 복사 역시 얕은 복사이다.
+
+<br>
+
+```js
+const arr = [1, 2, 3, ["a", "b"]];
+const copied = arr.slice();
+
+copied[3][1] = "c";
+
+console.log(arr === copied); // false
+console.log(arr, copied); //  [1,2,3,['a','c']]  [1,2,3,['a','c']]
+```
+
+- slice 메서드를 통한 중첩 객체 복사, 깊은 복사는 이뤄지지 않는다.
+
+<br>
+
+> ### Spread Operator
+
+<br>
+
+```js
+const arr = [1, 2, 3, 4];
+const copied = [...arr];
+
+copied[3] = 9;
+
+console.log(arr === copied); //  false
+console.log(arr, copied); // [1,2,3,4] [1,2,3,9]
+```
+
+- Spread Operator 용법을 통한 객체 복사 역시 얕은 복사이다.
+
+<br>
+
+```js
+const arr = [1, 2, 3, ["a", "b"]];
+const copied = [...arr];
+
+copied[3][1] = "c";
+
+console.log(arr === copied); //  false
+console.log(arr, copied); //  [1,2,3,['a','c']]  [1,2,3,['a','c']]
+```
+
+- slice 메서드를 사용한 것과 마찬가지로 이것 또한 깊은 복사는 이뤄지지 않는다.
+
+<br>
+
+> ### Object.assign()
+
+<br>
+
+```js
+const arr = [1, 2, 3, 4];
+const copied = Object.assign([], arr);
+
+copied[3] = 9;
+
+console.log(arr === copied); // false
+console.log(arr, copied); // [1,2,3,4] [1,2,3,9]
+```
+
+- Object.assign()을 통한 복사도 얕은 복사이다. 이것 역시나 깊은 복사는 되지 않는다.
+
+<br>
+
+```js
+const arr = [1, 2, 3, ["a", "b"]];
+const copied = Object.assign([], arr);
+
+copied[3][1] = "c";
+
+console.log(arr === copied); // false
+console.log(arr, copied); //  [1,2,3,['a','c']]  [1,2,3,['a','c']]
+```

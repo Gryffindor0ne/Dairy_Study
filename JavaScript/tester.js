@@ -180,3 +180,61 @@ const copied = JSON.parse(JSON.stringify(example));
 console.log(copied);
 
 ///
+const arr = [1, 2, 3, 4];
+const copied = arr.slice();
+
+copied[3] = 9;
+
+console.log(arr === copied);
+console.log(arr, copied);
+
+///
+
+const arr = [1, 2, 3, 4];
+const copied = [...arr];
+
+copied[3] = 9;
+
+console.log(arr === copied);
+console.log(arr, copied);
+///
+
+const arr = [1, 2, 3, 4];
+const copied = Object.assign([], arr);
+
+copied[3] = 9;
+
+console.log(arr === copied);
+console.log(arr, copied);
+
+///
+
+const arr = [1, 2, 3, ["a", "b"]];
+const copied = arr.slice();
+
+copied[3][1] = "c";
+
+console.log(arr === copied);
+console.log(arr, copied);
+
+//
+
+const arr = [1, 2, 3, ["a", "b"]];
+const copied = [...arr];
+
+copied[3][1] = "c";
+
+console.log(arr === copied);
+console.log(arr, copied);
+
+//
+
+const arr = [1, 2, 3, ["a", "b"]];
+const copied = Object.assign([], arr);
+
+copied[3][1] = "c";
+
+console.log(arr === copied);
+console.log(arr, copied);
+
+///
