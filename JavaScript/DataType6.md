@@ -29,6 +29,8 @@ let name;
 console.log(name); // undefined  <- 값이 존재하지 않음. 변수를 선언만 하고 값 할당하지 않았음.
 ```
 
+<br>
+
 2.  존재하지 않는 프로퍼티에 접근할 때
 
 ```js
@@ -41,6 +43,8 @@ console.log(teamMember.a); // Harry
 console.log(teamMember.b); // Hermione
 console.log(teamMember.c); // undefined   <- 없는 프로퍼티
 ```
+
+<br>
 
 3.  함수 리턴을 하지 않았을 때
 
