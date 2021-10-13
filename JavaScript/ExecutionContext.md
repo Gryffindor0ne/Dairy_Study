@@ -1,4 +1,4 @@
-# Part 2-1.
+# Part 2.
 
 ### `코어 자바스크립트` 공부한 내용 정리 (정재남 저)
 
@@ -37,8 +37,6 @@
 
 <br>
 
-참조 : [실행 컨텍스트](https://poiemaweb.com/js-execution-context)
-
 <br>
 
 - 예시
@@ -64,6 +62,7 @@ console.log(a); // 1
 1. 자바스크립트가 실행되면 코드가 실행되는 순간 **전역 컨텍스트** 가 콜 스택에 담긴다. (자동적으로 생성)
 
 - 스택 (stack)
+
   LIFO(Last In First Out) 원칙을 따르는 선형 데이터 구조. 늦게 들어간 것이 제일 먼저 나온다.
 
 ![stack (1)](https://user-images.githubusercontent.com/79234473/136873371-0d909cac-d248-4927-963d-bf4243283689.png)
@@ -109,15 +108,17 @@ Inside Global Execution Context
 
 ![실행컨텍스트2](https://user-images.githubusercontent.com/79234473/136782449-9ee21758-b40f-4805-b7fc-a65549b50d65.png)
 
-참조 : [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
-
 <br>
 
 > 그럼, 실행 컨텍스트에는 어떤 정보가 담기는 걸까?
 
+- 해당 내용은 책에서 설명한 부분으로 ES5 기준
+
+<br>
+
 ```js
 ExecutionContext = {
-  LexicalEnvironment: [Lexical Environment],
+    LexicalEnvironment: [Lexical Environment],
   VariableEnvironment: [Lexical Environment],
   ThisBinding: [object]
 }  // [] 안의 내용은 type을 뜻한다.
@@ -135,11 +136,9 @@ ExecutionContext = {
 
 > Lexical Environment 타입의 구성
 
-<br>
-
 ```js
 Lexical Environment = {
-  environmentRecord: {},
+    environmentRecord: {},
   outerEnvironmentReference: {}
 }
 ```
@@ -150,4 +149,106 @@ Lexical Environment = {
 
 - outerEnvironmentReference : 현재 Context를 기준으로 외부 Context를 참조하는 공간
 
-참조 : [Lexical Environment](https://medium.com/@kkak10/lexical-environment-4e0cffcad98d)
+<br>
+
+---
+
+<br>
+
+> 여기서 부터는 **코어 자바스크립트**에서 설명한 실행 컨텍스트의 개념을 좀 더 공부하다가 ES6 기준은 조금 다른 부분이 있어서 그 기준으로 좀 더 깊게 설명하고자 함.
+
+<br>
+
+## 실행 컨텍스트는 어떻게 만들어지는가?
+
+<br>
+
+실행 컨텍스트는 2개의 단계를 거쳐 생성된다.
+
+1. 생성단계 (Creation Phase)
+2. 실행단계 (Execution Phase)
+
+<br>
+
+### **생성단계 (Creation Phase)**
+
+<br>
+
+실행 컨텍스트(Execution Context, 줄여서 EC)는 생성단계에서 다음 2개의 컴포넌트를 생성한다.
+
+1. LexicalEnvironment
+2. VariableEnvironment
+
+<br>
+
+- 코드로 보자면,
+
+```js
+ExecutionContext = {
+  LexicalEnvironment = <ref. to LexicalEnvironment in memory>,
+  VariableEnvironment = <ref. to VariableEnvironment in  memory>,
+}
+```
+
+> 어라, 어디서 본 듯한 코드인데...
+
+<br>
+
+### 그렇다. 위에서 나왔다. EC에 어떤 정보가 들어가는지 얘기하다가...
+
+<br>
+
+```js
+ES6에서는 `ThisBinding` 이 EC에 포함되지 않고 이후 나오는 Lexical Environment 부분에 포함되었다.
+```
+
+<br>
+
+> ## 자 그럼, **EC 의 Lexical Environment**에 대해 알아보자.
+
+<br>
+
+## Lexical Environment
+
+```js
+Lexical Environment는 자바스크립트 코드에서 변수나 함수 등의 식별자를 정의하는데 사용하는 객체로 생각하면 쉽다. (또는, 식별자들에 대한 정보를 매핑한 모음)
+
+Lexical Environment는 식별자-변수 매핑을 보유하는 구조이다. (여기서 식별자는 변수의 이름을 나타냅니다.
+```
+
+<br>
+
+- 간단한 예시를 보자.
+
+```js
+let name = "Harry";
+let job = "Magician";
+
+function magic() {
+  console.log(`${name} is ${job}!!!`);
+}
+```
+
+<br>
+
+- 위의 예시코드를 Lexical Environment로 표현한다면,
+
+```js
+lexicalEnvironment = {
+  name : "Harry",
+  job: "Magician",
+  magic: <ref. to magic function>
+}
+```
+
+## <br>
+
+## 참고자료
+
+- [자바스크립트 함수(3) - Lexical Environment](https://meetup.toast.com/posts/129)
+
+- [Lexical Environment](https://medium.com/@kkak10/lexical-environment-4e0cffcad98d)
+
+- [실행 컨텍스트](https://poiemaweb.com/js-execution-context)
+
+- [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
