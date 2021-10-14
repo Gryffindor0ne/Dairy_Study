@@ -174,7 +174,7 @@ Lexical Environment = {
 
 <br>
 
-### **생성단계 (Creation Phase)**
+# **생성단계 (Creation Phase)**
 
 <br>
 
@@ -245,6 +245,8 @@ lexicalEnvironment = {
 }
 ```
 
+     Lexical Environment은 위와 같이 식별자들에 대한 정보를 매핑한다.
+
 <br>
 
 > 그럼, Lexical Environment에는 어떤 것이 있을까?
@@ -261,9 +263,95 @@ lexicalEnvironment = {
 
 ## Environment Record
 
-![ER](https://user-images.githubusercontent.com/79234473/137244808-9388f914-9fea-406a-a057-8fe8f4415b4f.png)
+<br>
+
+```js
+Environment Record는 식별자들의 바인딩을 기록하는 객체를 말한다.
+간단히 말해 변수, 함수 등이 기록되는 곳이다.
+
+실질적으로 Declarative Environment Record와 Object Environment Record 2가지 종류를 일켣는다.
+
+자세히는 Global Environment Record, Function Environment Record, Module Environment Record도 있다.
+
+이들은 다음과 같은 상속 관계를 갖는다.
+```
 
 <br>
+
+![ER](https://user-images.githubusercontent.com/79234473/137255483-6143822b-94b0-4cb1-b25b-f37e6de3bb58.png)
+
+<br>
+
+- Declarative Environment Record
+
+  > 변수 및 함수 선언을 저장.
+
+<br>
+
+- Object Environment Record
+
+  > 변수 및 함수 선언 외에 전역 바인딩 개체(window object in browsers)도 저장.
+
+  > > `The lexical environment for global code contains a objective environment record`
+
+<br>
+
+**참고로 추가 설명**
+
+함수 코드가 실행되면 Environment Record에 **arguments** object가 포함된다.
+
+이 객체에는 함수에 전달된 인덱스와 인수, 그리고 인수의 길이를 포함된다.
+
+<br>
+
+- 예시를 보면,
+
+```js
+let name = 'Harry';
+let spell = 'Aquamenti';
+
+function magic(name, spell) {
+  console.log(`${name} called : ${spell}!!!`);
+}
+
+magic(name, spell)
+
+// arguments object
+arguments : {0: 'Harry',1: 'Aquamenti', length: 2}
+```
+
+<br>
+
+## Reference to the Outer Environment
+
+<br>
+
+```js
+Reference to the Outer Environment(줄여서 Outer)는 외부의 lexical environment에 액세스할 수 있음을 의미한다.
+
+이는 JavaScript 엔진이 현재 lexical environment에서 변수를 찾을 수 없는 경우 외부 환경 내부에서 변수를 찾을 수 있음을 의미한다.
+
+ES3에서 말하던 Scope Chain과 유사한 개념이라고 보면 된다. ES5부터는 `Lexical nesting structure`로 불린다.
+ 변수를 탐색하는 과정에서 현재 실행 컨텍스트 내의 참조할 변수가 없다면 상위 lexical environment에 접근하여 변수를 찾는 매커니즘이다.
+```
+
+<br>
+
+## ThisBinding
+
+<br>
+
+```js
+Global execution context에서 this는 global obejct를 나타낸다.
+ (예를 들어 브라우저라면 Window Object)
+
+Function execution context에서 this 값은 함수가 호출되는 방식에 따라 다릅니다.
+
+객체 참조에 의해 호출되면 this 값이 해당 객체로 설정되고, 그렇지 않으면 this 값이 전역 객체로 설정되거나 정의되지 않는다. _ undefined
+
+```
+
+## <br>
 
 ## 참고자료
 
