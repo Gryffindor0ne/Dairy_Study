@@ -138,7 +138,7 @@ ExecutionContext = {
 
 ```js
 Lexical Environment = {
-    environmentRecord: {},
+  environmentRecord: {},
   outerEnvironmentReference: {}
 }
 ```
@@ -158,6 +158,10 @@ Lexical Environment = {
 > 여기서 부터는 **코어 자바스크립트**에서 설명한 실행 컨텍스트의 개념을 좀 더 공부하다가 ES6 기준은 조금 다른 부분이 있어서 그 기준으로 좀 더 깊게 설명하고자 함.
 
 <br>
+
+## 실행 컨텍스트의 구조
+
+![EC2](https://user-images.githubusercontent.com/79234473/137242638-c42373f2-64ec-4475-bccc-819ff5da1896.png)
 
 ## 실행 컨텍스트는 어떻게 만들어지는가?
 
@@ -213,7 +217,7 @@ ES6에서는 `ThisBinding` 이 EC에 포함되지 않고 이후 나오는 Lexica
 ```js
 Lexical Environment는 자바스크립트 코드에서 변수나 함수 등의 식별자를 정의하는데 사용하는 객체로 생각하면 쉽다. (또는, 식별자들에 대한 정보를 매핑한 모음)
 
-Lexical Environment는 식별자-변수 매핑을 보유하는 구조이다. (여기서 식별자는 변수의 이름을 나타냅니다.
+Lexical Environment는 식별자-변수 매핑을 보유하는 구조이다. (여기서 식별자는 변수의 이름을 나타낸다.)
 ```
 
 <br>
@@ -241,9 +245,29 @@ lexicalEnvironment = {
 }
 ```
 
-## <br>
+<br>
+
+> 그럼, Lexical Environment에는 어떤 것이 있을까?
+
+<br>
+
+- Lexical Environment는 다음의 3가지 컴포넌트를 가진다.
+
+1. Environment Record
+2. Reference to the outer environment
+3. ThisBinding
+
+<br>
+
+## Environment Record
+
+![ER](https://user-images.githubusercontent.com/79234473/137244808-9388f914-9fea-406a-a057-8fe8f4415b4f.png)
+
+<br>
 
 ## 참고자료
+
+- https://262.ecma-international.org/6.0/#sec-lexical-environments
 
 - [자바스크립트 함수(3) - Lexical Environment](https://meetup.toast.com/posts/129)
 
