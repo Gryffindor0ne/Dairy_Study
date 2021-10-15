@@ -326,7 +326,7 @@ arguments : {0: 'Harry',1: 'Aquamenti', length: 2}
 
 <br>
 
-```md
+```js
 Reference to the Outer Environment(줄여서 Outer)는 외부의 lexical environment에 액세스할 수 있음을 의미한다.
 
 이는 JavaScript 엔진이 현재 lexical environment에서 변수를 찾을 수 없는 경우 외부 환경 내부에서 변수를 찾을 수 있음을 의미한다.
@@ -397,7 +397,7 @@ secondEnvironment = {
 ![LE2](https://user-images.githubusercontent.com/79234473/137315966-a4a48a5c-45f0-4ff4-8f49-0e11395386dc.png)
 
 ```js
-예시코드에서 third 함수가 실행되었을 때
+예시 코드에서 third 함수가 실행되었을 때
 secondConst, firstConst, global, thirdConst 변수를 찾게 될 것이다.
 
 위의 그림에서는 secondConst, thirdConst를 예로 들었는데 보다시피 현재 LexicalEnvironment에 값이 있는지 확인하고 변수가 없으면 부모의 값으로 이동한다.
@@ -410,7 +410,7 @@ secondConst의 경우 second LexicalEnvironment에 값이 존재하므로 그 �
 <br>
 
 ```js
-이것은 일반적으로 듣던 스코프 체인이다. 그러나 중요한 점은 부모의 환경에 연결되는 Outer(외부 환경)는 함수가 호출될 때가 아니라 `선언될 때 결정` 된다.
+이것이 일반적으로 듣던 스코프 체인이다. 그러나 중요한 점은 부모의 환경에 연결되는 Outer(외부 환경)는 함수가 호출될 때가 아니라 `선언될 때 결정` 된다.
 ```
 
 <br>
@@ -447,6 +447,50 @@ Global execution context에서 this는 global obejct를 나타낸다.
 
 Function execution context에서 this 값은 함수가 호출되는 방식에 따라 다릅니다.
 객체 참조에 의해 호출되면 this 값이 해당 객체로 설정되고, 그렇지 않으면 this 값이 전역 객체로 설정되거나 정의되지 않는다. _ undefined
+```
+
+<br>
+
+- 예시를 보자.
+
+```js
+const magician = {
+  name: "Harry",
+  birthYear: 1980,
+  calAge: function () {
+    console.log(2021 - this.birthYear);
+  },
+};
+magician.calAge(); // 41
+
+const calculateAge = magician.calAge;
+calculateAge(); // NaN
+```
+
+<br>
+
+- `magician.calAge()`을 실행하였을 때 **this**는 magician 객체가 된다. 객체를 참조하면서 호출되었기 때문이다.
+
+```js
+this : object
+
+{
+  name: "Harry",
+  birthYear: 1980,
+  calAge: function () {
+    console.log(2021 - this.birthYear);
+  },
+}
+```
+
+<br>
+
+- `calculateAge()`이 실행되면 **this**는 객체 참조가 없기 때문에 전역 객체를 참조하여 null이 된다. 그리하여 결과적으로 값이 NaN이 된다.
+
+```js
+this = window;
+
+{...}
 ```
 
 ## <br>
