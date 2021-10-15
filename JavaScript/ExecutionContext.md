@@ -326,13 +326,113 @@ arguments : {0: 'Harry',1: 'Aquamenti', length: 2}
 
 <br>
 
-```js
+```md
 Reference to the Outer Environment(줄여서 Outer)는 외부의 lexical environment에 액세스할 수 있음을 의미한다.
 
 이는 JavaScript 엔진이 현재 lexical environment에서 변수를 찾을 수 없는 경우 외부 환경 내부에서 변수를 찾을 수 있음을 의미한다.
 
-ES3에서 말하던 Scope Chain과 유사한 개념이라고 보면 된다. ES5부터는 `Lexical nesting structure`로 불린다.
- 변수를 탐색하는 과정에서 현재 실행 컨텍스트 내의 참조할 변수가 없다면 상위 lexical environment에 접근하여 변수를 찾는 매커니즘이다.
+다시 말해, 변수를 탐색하는 과정에서 현재 실행 컨텍스트 내의 참조할 변수가 없다면 상위 lexical environment에 접근하여 변수를 찾는 매커니즘이다.
+
+ES3에서 말하던 Scope Chain과 동일한 개념으로 ES5부터는 `Lexical nesting structure`로 불린다.
+```
+
+<br>
+
+- 예시 코드를 보자.
+
+```js
+const global = "I'm global";
+function first() {
+  const firstConst = "I'm firstConst";
+  function second() {
+    const secondConst = "I'm secondConst";
+    function third() {
+      console.log(secondConst); // "I'm secondConst"
+      console.log(firstConst); // "I'm firstConst"
+      console.log(global); // "I'm global"
+      console.log(thirdConst); // Reference Error : thirdConst is not defined
+    }
+    third();
+  }
+  second();
+}
+first();
+```
+
+- 위 코드를 단순하게 표현하자면 아래와 같다. (일부 상세한 코드는 생략)
+
+```js
+GlobalEnvironment = {
+  environmentRecord: {
+    global: "I'm global",
+  },
+  outer: null,
+};
+
+firstEnvironment = {
+  environmentRecord: {
+    firstConst: "I'm firstConst",
+  },
+  outer: globalEnvironment, // first는 Global에서 생성됐다.
+};
+
+secondEnvironment = {
+  environmentRecord: {
+    secondConst: "I'm secondConst",
+  },
+  outer: firstConstEnvironment, // second는 first 안에서 생성됐다.
+};
+```
+
+<br>
+
+![LE](https://user-images.githubusercontent.com/79234473/137315961-9c4a4b95-909e-4c7b-a4c6-af3d3ca9aa4f.png)
+
+```js
+위 그림에서처럼 각 lexical environment에서 `Outer`는 부모의 lexical environment를 가리킨다.
+```
+
+<br>
+
+![LE2](https://user-images.githubusercontent.com/79234473/137315966-a4a48a5c-45f0-4ff4-8f49-0e11395386dc.png)
+
+```js
+예시코드에서 third 함수가 실행되었을 때
+secondConst, firstConst, global, thirdConst 변수를 찾게 될 것이다.
+
+위의 그림에서는 secondConst, thirdConst를 예로 들었는데 보다시피 현재 LexicalEnvironment에 값이 있는지 확인하고 변수가 없으면 부모의 값으로 이동한다.
+
+secondConst의 경우 second LexicalEnvironment에 값이 존재하므로 그 값을 참조할 것이다.
+
+그러나 thirdConst는 그 값을 발견할 때까지 상위 LexicalEnvironment에 접근하다가 결국 존재하지 않는 값이므로 null을 만나 `Reference Error`가 난다.
+```
+
+<br>
+
+```js
+이것은 일반적으로 듣던 스코프 체인이다. 그러나 중요한 점은 부모의 환경에 연결되는 Outer(외부 환경)는 함수가 호출될 때가 아니라 `선언될 때 결정` 된다.
+```
+
+<br>
+
+- 다음 코드를 보자.
+
+```js
+let i = 1;
+function foo() {
+  let i = 2;
+  bar();
+}
+function bar() {
+  console.log(i);
+}
+foo(); // 1
+```
+
+```js
+위의 결과값이 2가 아닌 `1`이 나오는 이유는?
+
+`Outer`는 부모를 둘러싼 함수가 아니라 부모의 LexicalEnvironment이기 때문이다.
 ```
 
 <br>
@@ -343,12 +443,10 @@ ES3에서 말하던 Scope Chain과 유사한 개념이라고 보면 된다. ES5�
 
 ```js
 Global execution context에서 this는 global obejct를 나타낸다.
- (예를 들어 브라우저라면 Window Object)
+(예를 들어 브라우저라면 Window Object)
 
 Function execution context에서 this 값은 함수가 호출되는 방식에 따라 다릅니다.
-
 객체 참조에 의해 호출되면 this 값이 해당 객체로 설정되고, 그렇지 않으면 this 값이 전역 객체로 설정되거나 정의되지 않는다. _ undefined
-
 ```
 
 ## <br>
@@ -357,7 +455,7 @@ Function execution context에서 this 값은 함수가 호출되는 방식에 �
 
 - https://262.ecma-international.org/6.0/#sec-lexical-environments
 
-- [자바스크립트 함수(3) - Lexical Environment](https://meetup.toast.com/posts/129)
+- [자바스크립트 함수 - Lexical Environment](https://meetup.toast.com/posts/129)
 
 - [Lexical Environment](https://medium.com/@kkak10/lexical-environment-4e0cffcad98d)
 
