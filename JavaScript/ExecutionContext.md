@@ -493,6 +493,28 @@ this = window;
 {...}
 ```
 
+<br>
+
+> ## **EC - Variable Environment**
+
+<br>
+
+## Variable Environment
+
+<br>
+
+Variable Environment는 EC 내에서 VariableStatements에 의해 생성된 바인딩을 EnvironmentRecord에 보관하는 Lexical Environment로서, 기본적으로 Lexical Environment가 가지는 모든 속성과 구성 요소를 동일하게 가지고 있다.
+
+<br>
+
+```js
+ES6에서는 LexicalEnvironment와  VariableEnvironment 차이점으로 다음 1가지 포인트를 얘기한다.
+
+LexicalEnvironment는 함수 선언과 변수(let 및 const) 바인딩을 저장하는 데 사용되는 반면 VariableEnvironment는 변수(var) 바인딩만 저장하는 데 사용된다.
+
+다시 말해, LexicalEnvironment은 함수와 let, const 키워드로 선언한 변수에 사용되고 VariableEnvironment는 var 키워드로 선언한 변수에 사용된다고 볼 수 있다.
+```
+
 ## <br>
 
 ## 참고자료
