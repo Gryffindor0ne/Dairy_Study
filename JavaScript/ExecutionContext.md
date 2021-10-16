@@ -685,6 +685,42 @@ var로 선언된 변수 add의 값이 할당된다.
 
 ---
 
+### 여기서 잠깐!
+
+<br>
+
+### **호이스팅**
+
+<br>
+
+> 자바스크립트는 ES6에서 도입된 let, const를 포함하여 모든 선언(var, let, const, function, function\*, class)을 호이스팅한다.
+
+> 호이스팅(Hoisting)이란, var 선언문이나 function 선언문 등을 해당 스코프의 선두로 옮긴 것처럼 동작하는 특성을 말한다.
+
+<br>
+
+```js
+위의 예시에서 보면,
+
+ EC의 생성 단계에서 var로 선언한 변수는 `undefined` 라는 값을 가지고, let, const로 선언된 변수는 값을 가지지 않는다. (uninitialized)
+
+이것은 EC의 생성 단계에서 코드에서 변수 및 함수 선언을 검색하고, 함수 선언이 환경에 완전히 저장되는 동안 변수는 초기에 정의되지 않은 상태(undefined)(var의 경우)로 설정되거나 초기화되지 않은 상태(uninitialized)(let과 const의 경우)로 설정되는데,
+
+이러한 원리로 인해 var로 선언된 변수에는 `undefined` 라는 값이 존재함으로 참조가 가능하지만
+let, const로 선언된 변수는 비어 있는 상태이기 때문에 참조가 불가하여 Reference Error가 난다.
+
+let, const로 선언된 변수는 값이 할당이 되기 전까지 초기화되지 않기 때문에 `일시적 사각지대(TDZ)` 라는 곳에 빠지기 때문이다.
+
+즉, 변수가 초기화되지 않았다는 것은 메모리 공간이 확보되지 않았다는 것이고 이로 인해 변수를 참조할 수 없다.
+
+```
+
+<br>
+
+```
+해당 스코프의 시작부터 초기화 단계까지의 구간을 `TDZ(Temporal Dead Zone)`라고 한다.
+```
+
 ## <br>
 
 ## 참고자료
@@ -699,6 +735,4 @@ var로 선언된 변수 add의 값이 할당된다.
 
 - [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
 
-```
-
-```
+- https://poiemaweb.com/es6-block-scope
