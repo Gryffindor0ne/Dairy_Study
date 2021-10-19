@@ -176,3 +176,276 @@ let, const로 선언된 변수는 변수의 선언만 **호이스팅(Hoisting)**
 ```
 
   <br>
+
+> ### 자, 그럼 함수에서는 어떨까?
+
+<br>
+
+#### **함수 선언식 VS 함수 표현식**
+
+<br>
+
+```js
+function declaration() {
+  // 함수 선언식
+  console.log("I,m declaration function");
+}
+declaration(); // I,m declaration function
+
+const expression = function () {
+  // 함수 표현식 _ 함수 이름이 없어 `익명 함수 표현식` 이라고도 함.
+  console.log("I,m expression function");
+};
+expression(); // I,m expression function
+```
+
+<br>
+
+함수를 정의하는 방법은 크게 2가지 방식이 있다. (사실 3가지 방식이 있으나 나머지 1가지는 거의 사용되지 않는다.\_ 기명 함수 표현식)
+
+위의 첫번째 예시에서 function 으로 시작하는 함수 정의가 **함수 선언식**의 방식이고, 두번째 예시처럼 변수에 함수를 할당하는 방식이 **함수 표현식**의 방식이다.
+
+**함수 선언식**의 방식은 반드시 함수의 이름이 명명되야 하지만, **함수 표현식**은 함수의 이름을 딱히 지정할 필요가 없다. 함수를 할당한 변수가 그 함수의 이름이 된다.
+
+두 방식의 큰 차이점은 바로 **호이스팅(Hoisting)** 의 여부이다.
+
+<br>
+
+1. 함수 선언식
+
+```js
+magic(); // Abracadabra!!!
+
+function magic() {
+  console.log(" Abracadabra!!!");
+}
+```
+
+- 함수 선언식으로 정의한 함수 magic을 선언하기 전에 실행하였는데 실행이 이루어졌다. 위 코드는 아래과 같이 인식된다.
+
+ <br>
+
+```js
+function magic() {
+  console.log(" Abracadabra!!!");
+}
+
+magic(); // Abracadabra!!!
+```
+
+- 함수 선언식으로 정의한 함수는 함수 자체가 통째로 **호이스팅(Hoisting)** 된다.
+
+ <br>
+
+ <br>
+
+2.  함수 표현식
+    <br>
+
+```js
+magic(); // Uncaught TypeError: magic is not a function
+
+const magic = function () {
+  console.log(" Abracadabra!!!");
+};
+```
+
+- 함수 표현식으로 정의한 함수 magic을 정의하기 전 실행하니 Error가 발생한다. magic은 함수가 아니라는 메세지가 나온다.
+
+  함수 표현식으로 정의한 함수는 **호이스팅(Hoisting)** 이 이루어지지 않아 실행되지 않는다.
+
+<br>
+
+> ### **호이스팅(Hoisting)** 에서 중요한 것은 선언만 끌어올려진다는 점
+
+<br>
+
+변수에서는 변수의 선언부, 함수에서는 함수 선언식만이 자바스크립트의 특징으로 유효범위 최상단에 끌어올려진 것처럼 작동한다.
+
+<br>
+<br>
+
+### **여기서 KEY POINT**
+
+<br>
+
+> ### **호이스팅(Hoisting)** 을 피하라!
+
+<br>
+
+자바스크립트의 특징인 **호이스팅(Hoisting)** 은 많은 오류를 발생시킬 여지가 많다. 함수 선언식으로 함수를 어느 곳에서든 선언만 하면 사용할 수 있지만 바로 그런 코드의 유연성이 오류를 발생시킬 수 있다.
+
+<br>
+
+```js
+console.log(cal(10, 20)); // 200
+
+function cal(a, b) {
+  return a * b;
+}
+
+let multiply = cal(11, 22);
+console.log(multiply); // 242
+```
+
+함수 선언식으로 정의된 함수 cal이 중간에 선언되었지만 두 개의 console.log는 잘 작동하는 것을 볼 수 있다.
+**호이스팅(Hoisting)** 으로 인해 다음과 같이 자바스크립트 엔진은 인식하기 때문이다.
+
+<br>
+
+```js
+function cal(a, b) {
+  return a * b;
+}
+
+console.log(cal(10, 20)); // 200
+
+let multiply = cal(11, 22);
+console.log(multiply); // 242
+```
+
+그런데 이 코드를 다른 사람이 수정한다고 해보자. 자바스크립트는 위에서 아래로 작동하니 아래부분에 새로 작성하는 코드부터는 새로운 수식으로 계산하는 함수를 만들어 다른 값을 얻고자 한다.
+
+<br>
+
+```js
+console.log(cal(10, 20));  // 예상 값 : 200
+
+function cal(a, b) {  // 첫번째 함수 선언문
+  return a * b;
+}
+
+let multiply = cal(11, 22);
+console.log(multiply);  // 예상 값 : 242
+.
+.
+.
+.
+.
+.
+.
+
+function cal(a, b) {  // 두번째 함수 선언문 : 여기부터는 다른 값을 얻고 싶다!
+  return a + b;
+}
+
+console.log(cal(20, 30)) // 예상 값 : 50
+```
+
+그런데 결과는 다르게 나타난다.
+
+두번째 함수 역시 **호이스팅(Hoisting)** 이 일어나 두번째 선언한 함수가 첫번째 함수를 덮어쓴다.
+결국 모든 것은 두번째 함수에 의해 결과값을 도출하게 되는 것이다.
+
+ <br>
+
+```js
+function cal(a, b) {
+  return a * b;
+}
+
+function cal(a, b) {
+  return a + b;
+}
+
+console.log(cal(10, 20)); // 30
+
+let multiply = cal(11, 22); // 33
+console.log(multiply);
+
+console.log(cal(20, 30)); // 50
+```
+
+원하는 결과를 얻고자 한다면 **호이스팅(Hoisting)**이 일어나지 않는 함수 표현식을 써야 한다.
+
+<br>
+
+```js
+console.log(cal(10, 20)); // Uncaught TypeError: cal is not a function
+
+var cal = function (a, b) {
+  return a * b;
+};
+
+let multiply = cal(11, 22);
+console.log(multiply);
+
+var cal = function (a, b) {
+  return a + b;
+};
+
+console.log(cal(20, 30));
+```
+
+- 앗! 함수 표현식은 일단 함수 선언전에 호출하면 에러가 발생한다. 위와 같이 말이다. - 바로 에러 디버깅!
+
+<br>
+
+```js
+var cal = function(a, b) { // 첫번째 함수 표현식
+    return a * b;
+}
+
+let multiply = cal(11, 22);  // 242
+console.log(multiply);
+.
+.
+.
+.
+.
+
+var cal = function(a, b) {  // 두번째 함수 표현식
+  return a + b;
+}
+
+console.log(cal(20, 30)) //  50
+```
+
+- 위과 같이 써야 같은 이름의 함수를 작성해도 다른 결과를 얻을 수 있다.
+
+  그런데 굳이 왜 같은 이름의 함수를 사용하는가?
+
+  물론 코드가 너무 길어져 같은 이름의 함수가 사용됨을 모르고 다시 사용하는 경우가 생길 수 있다.
+
+  그러나 이건 코드의 가독성 및 유지보수 측면에서 비효율적이다.
+
+  <br>
+
+```js
+let cal = function (a, b) {
+  return a * b;
+};
+
+let multiply = cal(11, 22);
+console.log(multiply);
+
+let cal = function (a, b) {
+  // Uncaught SyntaxError: Identifier 'cal' has already been declared
+  return a + b;
+};
+
+console.log(cal(20, 30));
+```
+
+- 함수 표현식에서 let 혹은 const를 사용하자. 같은 이름이 있다고 바로 알려준다.
+
+<br>
+
+> ## 정리
+>
+> <br>
+
+- ### 코드의 가독성과 유지보수를 위해 호이스팅이 일어나지 않도록 하자!
+- ### let 혹은 const를 사용하자!
+
+<br>
+
+---
+
+## 참고자료
+
+- [[JavaScript] 호이스팅(Hoisting)이란](https://gmlwjd9405.github.io/2019/04/22/javascript-hoisting.html)
+
+- [let, const와 블록 레벨 스코프](https://poiemaweb.com/es6-block-scope)
+
+- [[Javascript] Hoisting(호이스팅)](https://medium.com/@_diana_lee/javascript-hoisting-%ED%98%B8%EC%9D%B4%EC%8A%A4%ED%8C%85-2df9955db5c7)

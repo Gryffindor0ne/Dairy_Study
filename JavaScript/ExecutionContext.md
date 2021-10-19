@@ -738,4 +738,4 @@ let, const로 선언된 변수는 자바스크립트 엔진이 실행시 변수 
 
 - [Understanding Execution Context and Execution Stack in Javascript](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
 
-- https://poiemaweb.com/es6-block-scope
+- [let, const와 블록 레벨 스코프](https://poiemaweb.com/es6-block-scope)
