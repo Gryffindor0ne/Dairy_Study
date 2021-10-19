@@ -356,7 +356,7 @@ console.log(multiply);
 console.log(cal(20, 30)); // 50
 ```
 
-원하는 결과를 얻고자 한다면 **호이스팅(Hoisting)**이 일어나지 않는 함수 표현식을 써야 한다.
+원하는 결과를 얻고자 한다면 **호이스팅(Hoisting)** 이 일어나지 않는 함수 표현식을 써야 한다.
 
 <br>
 
@@ -432,8 +432,8 @@ console.log(cal(20, 30));
 <br>
 
 > ## 정리
->
-> <br>
+
+<br>
 
 - ### 코드의 가독성과 유지보수를 위해 호이스팅이 일어나지 않도록 하자!
 - ### let 혹은 const를 사용하자!
@@ -443,6 +443,8 @@ console.log(cal(20, 30));
 ---
 
 ## 참고자료
+
+<br>
 
 - [[JavaScript] 호이스팅(Hoisting)이란](https://gmlwjd9405.github.io/2019/04/22/javascript-hoisting.html)
 
