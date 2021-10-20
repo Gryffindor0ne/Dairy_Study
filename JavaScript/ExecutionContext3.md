@@ -33,6 +33,8 @@
 
 <br>
 
+### **Scope의 예시**
+
 ```js
 const value = "Global!";
 
@@ -59,7 +61,7 @@ console.log(otherValue); // Uncaught ReferenceError: otherValue is not defined
 
 scopeA 함수가 실행되면 value 변수에는 `A!`가 할당되고 otherValue 변수에는 `C!`가 할당된다. value 변수의 값을 출력되면 `A!`가 나올 것이다.
 
-scopeB 함수가 실행되면 새로운 value 변수에는 `B!`가 할당되고 value 변수의 값을 출력하면 `B!`가 나온다.
+scopeB 함수가 실행되면 새로운 value 변수를 선언하면 `B!`가 할당되고 value 변수의 값을 출력하면 `B!`가 나온다.
 
 그 다음 otherValue 변수를 출력하면 현재의 **스코프 (Scope)** 에서 otherValue 변수가 있지 않기 때문에 상위 스코프 즉, scopeA 함수 내부에서 선언된 otherValue 변수의 값을 참조하게 되고 `C!`가 출력된다.
 
@@ -67,6 +69,16 @@ scopeB 함수가 실행되면 새로운 value 변수에는 `B!`가 할당되고 
 `Global!`이 출력되고, otherValue 변수를 출력하고자 했을 때 otherValue 변수는 현재 스코프 내에 있지 않은 scopeA 함수 내부의 있는 변수이기 때문에 참조할 수 없다. 그래서 `ReferenceError` 가 나온다.
 
 <br>
+
+![scope](https://user-images.githubusercontent.com/79234473/137902318-e6df5fbd-2732-4e51-bf81-3db2a0e27abe.png)
+
+<br>
+
+![scope2](https://user-images.githubusercontent.com/79234473/137902345-b4c08739-cf37-4511-a5c6-1c225d7ed431.png)
+
+<br>
+
+### **Block (블록) Scope**
 
 ```js
 const value = "Global!";
@@ -83,6 +95,24 @@ function funcScope() {
 funcScope();
 console.log(value); // Global!
 ```
+
+<br>
+
+- `const` 로 선언한 변수는 **`Block Scope`** 를 가진다. (`let` 도 동일)
+
+  if문 안에서 const로 선언된 value 변수의 값은 if문의 블록 ({}) 안에서만 유효하기 때문에 if문 밖의 value 변수는 funcScope() Scope를 따른다. funcScope 함수 내부에서 선언된 value 값이 두번째 console.log(value)에서 출력되는 이유이다.
+
+<br>
+
+![scope3](https://user-images.githubusercontent.com/79234473/137902356-66e29647-9eb3-488c-b89d-ffdebc6a61c4.png)
+
+<br>
+
+![scope4](https://user-images.githubusercontent.com/79234473/137902358-1b863ce7-3aa9-465c-8550-c865f39ee4f3.png)
+
+<br>
+
+### **Function (함수) Scope**
 
 ```js
 var value = "Global!";
@@ -102,8 +132,24 @@ console.log(value); // Global!
 
 <br>
 
+- `var` 로 선언된 변수는 **`Function Scope`** 를 가진다.
+
+  if문 안에서 선언된 value 변수의 값은 var 로 선언되어 if문의 블록 ({}) 밖에서도 적용된다. if문 밖의 value 변수의 값은 두번째 console.log(value)에서 동일하게 출력된다.
+
+  <br>
+
+  ![scope5](https://user-images.githubusercontent.com/79234473/137902367-ef0789fb-67ee-4ec9-8d51-36e630aba147.png)
+
+  <br>
+
+  ![scope6](https://user-images.githubusercontent.com/79234473/137902374-017d6ce0-e548-4362-93f5-7f7545726079.png)
+
+  <br>
+
 ---
 
 ## 참고자료
 
 - [자바스크립트의 Scope 에 대한 이해](https://learnjs.vlpt.us/useful/08-scope.html)
+
+- [let, const와 블록 레벨 스코프](https://poiemaweb.com/es6-block-scope)
