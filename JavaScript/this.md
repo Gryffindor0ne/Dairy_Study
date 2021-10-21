@@ -368,3 +368,45 @@ btn.addEventListener("click", function() {
 <br>
 
 ---
+
+<br>
+
+### **네번째 상황 : 생성자 함수로서의 호출**
+
+<br>
+
+생성자 함수는 공통된 성질을 가진 객체를 생성하는 함수이다. 객체가 붕어빵이라면 생성자 함수는 붕어빵을 찍어내는 틀이라고 할 수 있다. new 키워드를 사용하여 함수를 호출하면 그 함수는 생성자 함수로 인식된다.
+
+<br>
+
+```js
+const magician = function (name, power) {
+  this.name = name;
+  this.power = power;
+};
+
+const a = new magician("Harry", 10);
+const b = new magician("Hermione", 8);
+const c = new magician("Ron", 4);
+
+console.log(a, b, c);
+/*
+magician {name: 'Harry', power: 10},
+magician {name: 'Hermione', power: 8},
+magician {name: 'Ron', power: 4}
+*/
+```
+
+생성자 함수에서의 **this** 는 새로 만들 객체 그 자신이 된다.
+
+a 변수로 선언된 새로운 인스턴스 객체 그 자신인 a가 **this** 인 것이다.
+
+<br>
+
+---
+
+## 참고자료
+
+- https://www.zerocho.com/category/JavaScript/post/5b0645cc7e3e36001bf676eb
+
+- https://im-developer.tistory.com/96
