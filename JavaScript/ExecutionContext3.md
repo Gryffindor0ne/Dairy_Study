@@ -100,7 +100,7 @@ console.log(value); // Global!
 
 - `const` 로 선언한 변수는 **`Block Scope`** 를 가진다. (`let` 도 동일)
 
-  if문 안에서 const로 선언된 value 변수의 값은 if문의 블록 ({}) 안에서만 유효하기 때문에 if문 밖의 value 변수는 funcScope() Scope를 따른다. funcScope 함수 내부에서 선언된 value 값이 두번째 console.log(value)에서 출력되는 이유이다.
+  if문 안에서 const로 선언된 value 변수의 값은 if문의 블록 ({}) 안에서만 유효하기 때문에 if문 밖의 value 변수는 funcScope Scope를 따른다. funcScope 함수 내부에서 선언된 value 값이 두번째 console.log(value)에서 출력되는 이유이다.
 
 <br>
 
