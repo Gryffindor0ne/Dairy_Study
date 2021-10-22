@@ -403,7 +403,11 @@ a 변수로 선언된 새로운 인스턴스 객체 그 자신인 a가 **this** 
 
 <br>
 
-> ### 명시적 **this** 바인딩 (Explicit Binding)
+---
+
+<br>
+
+> ## 명시적 **this** 바인딩 (Explicit Binding)
 
 <br>
 
@@ -427,7 +431,7 @@ a 변수로 선언된 새로운 인스턴스 객체 그 자신인 a가 **this** 
 
 <br>
 
-### **call 메서드**
+## **call 메서드**
 
 <br>
 
@@ -464,7 +468,7 @@ func 메서드를 실행하면 **this**는 methodCall 객체가 그 대상이지
 
 <br>
 
-### **apply 메서드**
+## **apply 메서드**
 
 <br>
 
@@ -499,7 +503,7 @@ methodApply.func.apply({ method: "apply2" }, [12, 24]); // apply2 12 24
 
 <br>
 
-> call / apply 메서드의 활용
+> ### call / apply 메서드의 활용
 
 <br>
 
@@ -625,6 +629,32 @@ console.log(arr); // ['Harry', 'Hermione', 'Ron']
 ### **생성자 함수 내부에서 사용**
 
 <br>
+
+```js
+function Person(name, ability) {
+  this.name = name;
+  this.ability = ability;
+}
+
+function ChiefOfStaff(name, ability, role) {
+  Person.call(this, name, ability);
+  this.role = role;
+}
+
+function Emperor(name, ability, country) {
+  Person.apply(this, [name, ability]);
+  this.country = country;
+}
+
+console.log(new ChiefOfStaff("Zhuge Liang", 100, "Chancellor")); // {name: 'Zhuge Liang', ability: 100, role: 'Chancellor'}
+console.log(new Emperor("Liu Bei", 91, "China")); // {name: 'Liu Bei', ability: 91, country: 'China'}
+```
+
+생성자 함수 내부에 다른 생성자와 중복되는 내용이 있을 경우, call / apply를 사용하면 간결한 코드 처리가 가능하다.
+
+<br>
+
+## **bind 메서드**
 
 ## <br>
 
