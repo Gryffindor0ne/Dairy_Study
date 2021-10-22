@@ -380,14 +380,14 @@ btn.addEventListener("click", function() {
 <br>
 
 ```js
-const magician = function (name, power) {
+const Magician = function (name, power) {
   this.name = name;
   this.power = power;
 };
 
-const a = new magician("Harry", 10);
-const b = new magician("Hermione", 8);
-const c = new magician("Ron", 4);
+const a = new Magician("Harry", 10);
+const b = new Magician("Hermione", 8);
+const c = new Magician("Ron", 4);
 
 console.log(a, b, c);
 /*
@@ -477,25 +477,152 @@ apply 메서드는 call 메서드와 작동 원리는 동일하다. 다른 점�
 <br>
 
 ```js
-const methodCall = function (x, y) {
+const methodApply = function (x, y) {
   console.log(this, x, y);
 };
 
-methodCall(1, 2); // Window {…} 1 2
-methodCall.apply({ method: "call" }, [9, 10]); // {method: 'call'} 9 10
+methodApply(1, 2); // Window {…} 1 2
+methodApply.apply({ method: "apply" }, [9, 10]); // {method: 'apply'} 9 10
 ```
 
 ```js
-const methodCall = {
-  method: "call",
+const methodApply = {
+  method: "apply",
   func: function (x, y) {
     console.log(this.method, x, y);
   },
 };
 
-methodCall.func(1, 2); // call 1 2
-methodCall.func.apply({ method: "call2" }, [12, 24]); // call2 12 24
+methodApply.func(1, 2); // apply 1 2
+methodApply.func.apply({ method: "apply2" }, [12, 24]); // apply2 12 24
 ```
+
+<br>
+
+> call / apply 메서드의 활용
+
+<br>
+
+### **유사배열객체에 배열 메서드를 붙이고 싶을 때**
+
+<br>
+
+```js
+const arr = ["Harry", "Hermione", "Ron"];
+
+typeof arr; // 'object'
+arr[0]; // 'Harry'
+arr.length; // 3
+```
+
+```js
+const obj = {
+  0: "Harry",
+  1: "Hermione",
+  2: "Ron",
+  length: 3,
+};
+
+typeof obj; // 'object'
+obj[0]; // 'Harry'
+obj.length; // 3
+```
+
+배열은 객체이지만, 인덱스와 length를 가진다. 유사배열객체는 배열처럼 인덱스와 length 프로퍼티를 가진 객체로 배열과 동일한 접근이 가능하다.
+
+그러나, 배열의 메소드를 유사배열객체에서는 사용할 수 없다. 원칙적으로 배열이 아니기 때문이다.
+
+```js
+const arr = ["Harry", "Hermione", "Ron"];
+
+arr.push("Voldemort");
+console.log(arr); //  ['Harry', 'Hermione', 'Ron', 'Voldemort']
+```
+
+```js
+const obj = {
+  0: "Harry",
+  1: "Hermione",
+  2: "Ron",
+  length: 3,
+};
+
+obj.push("Voldemort"); // Uncaught TypeError: obj.push is not a function
+```
+
+<br>
+
+call / apply 메소드는 이러한 유사배열객체에 배열과 동일하게 배열메소드를 적용하고 싶을때 사용이 가능하다.
+
+```js
+const obj = {
+  0: "Harry",
+  1: "Hermione",
+  2: "Ron",
+  length: 3,
+};
+
+Array.prototype.push.call(obj, "Voldemort");
+console.log(obj); // {0: 'Harry', 1: 'Hermione', 2: 'Ron', 3: 'Voldemort', length: 4}
+
+const arr = Array.prototype.slice.call(obj);
+console.log(arr); // ['Harry', 'Hermione', 'Ron', 'Voldemort']
+```
+
+call 메소드를 사용하여 유사배열객체에 배열 메소드인 push 메소드를 사용할 수 있다. 유사배열객체에 새로운 인자가 들어간 것을 볼 수 있다.
+
+배열메소드 slice를 사용하면 배열로 만들 수 있다.
+
+<br>
+
+> 자바스크립트에서 사용되는 대표적인 유사배열객체는 함수의 arguments 객체, HTMLCollection, NodeList 등이 있다.
+
+```js
+function func() {
+  const args = Array.prototype.slice.apply(arguments);
+  args.push("추가");
+  console.log(args);
+}
+
+func(1, 2, 3); // [1, 2, 3, '추가']
+```
+
+```js
+document.body.innerHTML = "<div>test</div><div>test2</div><div>test3</div>";
+const nodes = document.querySelectorAll("div");
+const nodeArr = Array.prototype.slice.call(nodes);
+nodeArr.forEach(function (node) {
+  console.log(node);
+});
+
+// <div>test</div>
+// <div>test2</div>
+// <div>test3</div>
+```
+
+<br>
+
+> ES6에서는 유사배열객체를 배열로 바꿔주는 메소드가 생겨났다.
+
+> ### **Array.from()**
+
+<br>
+
+```js
+const obj = {
+  0: "Harry",
+  1: "Hermione",
+  2: "Ron",
+  length: 3,
+};
+
+const arr = Array.from(obj);
+console.log(arr); // ['Harry', 'Hermione', 'Ron']
+```
+
+<br>
+
+### **생성자 함수 내부에서 사용**
 
 <br>
 
