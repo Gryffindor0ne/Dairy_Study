@@ -532,9 +532,13 @@ obj[0]; // 'Harry'
 obj.length; // 3
 ```
 
-배열은 객체이지만, 인덱스와 length를 가진다. 유사배열객체는 배열처럼 인덱스와 length 프로퍼티를 가진 객체로 배열과 동일한 접근이 가능하다.
+배열은 객체이지만, 인덱스와 length를 가진다.
+
+유사배열객체는 배열처럼 인덱스와 length 프로퍼티를 가진 객체로 배열과 동일한 접근이 가능하다.
 
 그러나, 배열의 메소드를 유사배열객체에서는 사용할 수 없다. 원칙적으로 배열이 아니기 때문이다.
+
+<br>
 
 ```js
 const arr = ["Harry", "Hermione", "Ron"];
@@ -554,9 +558,11 @@ const obj = {
 obj.push("Voldemort"); // Uncaught TypeError: obj.push is not a function
 ```
 
+배열메소드인 push는 유사배열객체인 obj에 적용되지 않음을 알 수 있다.
+
 <br>
 
-call / apply 메소드는 이러한 유사배열객체에 배열과 동일하게 배열메소드를 적용하고 싶을때 사용이 가능하다.
+> call / apply 메소드는 이러한 유사배열객체에 배열과 동일하게 배열메소드를 적용하고 싶을때 사용이 가능하다.
 
 ```js
 const obj = {
@@ -573,13 +579,23 @@ const arr = Array.prototype.slice.call(obj);
 console.log(arr); // ['Harry', 'Hermione', 'Ron', 'Voldemort']
 ```
 
-call 메소드를 사용하여 유사배열객체에 배열 메소드인 push 메소드를 사용할 수 있다. 유사배열객체에 새로운 인자가 들어간 것을 볼 수 있다.
+위의 예시처럼, call 메소드를 사용하여 유사배열객체에 배열 메소드인 push 메소드를 사용할 수 있다.
 
-배열메소드 slice를 사용하면 배열로 만들 수 있다.
+유사배열객체인 obj에 새로운 인자 'Voldemort'가 들어간 것을 볼 수 있다.
+
+참고로 배열메소드 slice를 사용하면 유사배열객체를 배열로 만들 수 있다.
 
 <br>
 
-> 자바스크립트에서 사용되는 대표적인 유사배열객체는 함수의 arguments 객체, HTMLCollection, NodeList 등이 있다.
+> 그럼, 유사배열객체는 어떤 것들이 있는가?
+
+<br>
+
+> ### 자바스크립트에서 사용되는 대표적인 유사배열객체는 함수의 arguments 객체, HTMLCollection, NodeList 등이 있다.
+
+<br>
+
+- 다음 예시를 살펴보면,
 
 ```js
 function func() {
@@ -590,6 +606,12 @@ function func() {
 
 func(1, 2, 3); // [1, 2, 3, '추가']
 ```
+
+유사배열객체인 `arguments` 객체에 apply 메소드를 사용하여 배열메소드 push를 사용할 수 있다.
+
+<br>
+
+또 다른 유사배열객체 `NodeList` 역시 마찬가지다.
 
 ```js
 document.body.innerHTML = "<div>test</div><div>test2</div><div>test3</div>";
@@ -604,6 +626,7 @@ nodeArr.forEach(function (node) {
 // <div>test3</div>
 ```
 
+<br>
 <br>
 
 > ES6에서는 유사배열객체를 배열로 바꿔주는 메소드가 생겨났다.
