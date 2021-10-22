@@ -6,7 +6,7 @@
 
 <br>
 
-## 03 this
+# 03 this
 
 <br>
 
@@ -22,10 +22,10 @@
 
 ```js
 console.log(this);
-// Window {0: global, window: Window, self: Window, document: document, name: '', location: Location, …}
+// Window {0: global, window: Window, self: Window, document: document,  location: Location, …}
 
 console.log(window);
-// Window {0: global, window: Window, self: Window, document: document, name: '', location: Location, …}
+// Window {0: global, window: Window, self: Window, document: document,  location: Location, …}
 ```
 
 console.log(this)를 출력하니 window 객체가 나온다. 밑에 있는 console.log(window)의 출력 결과와 같은 것을 볼 수 있다.
@@ -34,7 +34,7 @@ console.log(this)를 출력하니 window 객체가 나온다. 밑에 있는 cons
 
 <br>
 
-> ### 그럼 어떤 상황에서 this의 값이 변화하는 것일까?
+> ### 그럼 어떤 상황에서 **this** 의 값이 변화하는 것일까?
 
 <br>
 
@@ -403,7 +403,103 @@ a 변수로 선언된 새로운 인스턴스 객체 그 자신인 a가 **this** 
 
 <br>
 
----
+> ### 명시적 **this** 바인딩 (Explicit Binding)
+
+<br>
+
+**this** 는 위에서처럼 상황별로 그 대상이 달라진다. 그러나 별도의 대상을 지정해서 사용할 수도 있다.
+
+이걸 명시적 **this** 바인딩이라고 한다. **this** 의 역할을 직접 지정해준다고 보면 된다.
+
+<br>
+
+> 다음 3가지 방법이 있다.
+
+<br>
+
+```js
+  call 메서드
+
+  apply 메서드
+
+  bind 메서드
+```
+
+<br>
+
+### **call 메서드**
+
+<br>
+
+```
+실행함수.call(this로 지정할 대상, 인자1, 인자2 ...)
+```
+
+```js
+const methodCall = function (x, y) {
+  console.log(this, x, y);
+};
+
+methodCall(1, 2); // Window {…} 1 2
+methodCall.call({ method: "call" }, 9, 10); // {method: 'call'} 9 10
+```
+
+methodCall 함수를 실행하면 **this**는 전역 객체가 그 대상이지만, call 메서드를 붙이면 지정한 객체가 **this** 의 대상이 된다.
+
+<br>
+
+```js
+const methodCall = {
+  method: "call",
+  func: function (x, y) {
+    console.log(this.method, x, y);
+  },
+};
+
+methodCall.func(1, 2); // call 1 2
+methodCall.func.call({ method: "call2" }, 12, 24); // call2 12 24
+```
+
+func 메서드를 실행하면 **this**는 methodCall 객체가 그 대상이지만, 마찬가지로 call 메서드를 붙이면 지정한 객체가 **this** 의 대상이 된다.
+
+<br>
+
+### **apply 메서드**
+
+<br>
+
+```
+실행함수.apply(this로 지정할 대상, [인자1, 인자2, ...])
+```
+
+apply 메서드는 call 메서드와 작동 원리는 동일하다. 다른 점은 두번째 인자로 배열을 받는다는 점이다.
+
+<br>
+
+```js
+const methodCall = function (x, y) {
+  console.log(this, x, y);
+};
+
+methodCall(1, 2); // Window {…} 1 2
+methodCall.apply({ method: "call" }, [9, 10]); // {method: 'call'} 9 10
+```
+
+```js
+const methodCall = {
+  method: "call",
+  func: function (x, y) {
+    console.log(this.method, x, y);
+  },
+};
+
+methodCall.func(1, 2); // call 1 2
+methodCall.func.apply({ method: "call2" }, [12, 24]); // call2 12 24
+```
+
+<br>
+
+## <br>
 
 ## 참고자료
 
