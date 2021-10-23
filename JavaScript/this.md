@@ -361,9 +361,9 @@ btn.addEventListener("click", function() {
 })
 ```
 
-- 예시의 forEach 메서드는 콜백 함수를 인자로 받아 실행하는데 **this** 는 window 객체를 가리킨다.
+- 예시의 forEach 메서드는 콜백 함수를 인수로 받아 실행하는데 **this** 는 window 객체를 가리킨다.
 
-- addEventListener 메서드는 역시 콜백 함수를 인자로 받아 실행되었으나, **this** 는 해당 이벤트가 실행되는 주체인 상위 엘리먼트가 그 대상이 된다.
+- addEventListener 메서드는 역시 콜백 함수를 인수로 받아 실행되었으나, **this** 는 해당 이벤트가 실행되는 주체인 상위 엘리먼트가 그 대상이 된다.
 
 <br>
 
@@ -435,9 +435,11 @@ a 변수로 선언된 새로운 인스턴스 객체 그 자신인 a가 **this** 
 
 <br>
 
+```js
+실행함수.call(this로 지정할 대상, 인수1, 인수2 ...)
 ```
-실행함수.call(this로 지정할 대상, 인자1, 인자2 ...)
-```
+
+<br>
 
 ```js
 const methodCall = function (x, y) {
@@ -472,11 +474,13 @@ func 메서드를 실행하면 **this**는 methodCall 객체가 그 대상이지
 
 <br>
 
-```
-실행함수.apply(this로 지정할 대상, [인자1, 인자2, ...])
+```js
+실행함수.apply(this로 지정할 대상, [인수1, 인수2, ...])
 ```
 
-apply 메서드는 call 메서드와 작동 원리는 동일하다. 다른 점은 두번째 인자로 배열을 받는다는 점이다.
+<br>
+
+apply 메서드는 call 메서드와 작동 원리는 동일하다. 다른 점은 두번째 인수로 배열을 받는다는 점이다.
 
 <br>
 
@@ -581,7 +585,7 @@ console.log(arr); // ['Harry', 'Hermione', 'Ron', 'Voldemort']
 
 위의 예시처럼, call 메소드를 사용하여 유사배열객체에 배열 메소드인 push 메소드를 사용할 수 있다.
 
-유사배열객체인 obj에 새로운 인자 'Voldemort'가 들어간 것을 볼 수 있다.
+유사배열객체인 obj에 새로운 인수 'Voldemort'가 들어간 것을 볼 수 있다.
 
 참고로 배열메소드 slice를 사용하면 유사배열객체를 배열로 만들 수 있다.
 
@@ -669,8 +673,10 @@ function Emperor(name, ability, country) {
   this.country = country;
 }
 
-console.log(new ChiefOfStaff("Zhuge Liang", 100, "Chancellor")); // {name: 'Zhuge Liang', ability: 100, role: 'Chancellor'}
-console.log(new Emperor("Liu Bei", 91, "China")); // {name: 'Liu Bei', ability: 91, country: 'China'}
+console.log(new ChiefOfStaff("Zhuge Liang", 100, "Chancellor"));
+// {name: 'Zhuge Liang', ability: 100, role: 'Chancellor'}
+console.log(new Emperor("Liu Bei", 91, "China"));
+// {name: 'Liu Bei', ability: 91, country: 'China'}
 ```
 
 생성자 함수 내부에 다른 생성자와 중복되는 내용이 있을 경우, call / apply를 사용하면 간결한 코드 처리가 가능하다.
@@ -679,10 +685,124 @@ console.log(new Emperor("Liu Bei", 91, "China")); // {name: 'Liu Bei', ability: 
 
 ## **bind 메서드**
 
-## <br>
+<br>
+
+```js
+실행함수.bind(this로 지정할 대상, 고정할 인수1, 고정할 인수2, ...)
+```
+
+<br>
+
+bind 메서드는 call / apply 메서드와 비슷하지만 다른 점이 있다. 바로 호출되지 않는다는 점이다. **this** 로 지정한 대상 및 옵션값으로 고정된 인수를 받으면 그것들을 고정시킨 새로운 함수를 반환만 한다.
+
+call / apply 메서드와 같이 바로 값을 반환하지 않기 때문에 반환된 함수를 호출해야만 값을 반환한다.
+
+<br>
+
+**1. bind 메서드 기본 적용**
+
+```js
+let boundFunc = func.bind(context);
+```
+
+위의 코드를 보면 좀 더 이해가 된다.
+
+func.bind(context)에서 context는 **this**로 지정할 대상이다. 위의 코드처럼 bind 메서드로 **this**를 바인딩하면 boundFunc 변수에는 값이 저장되는 것이 아니라 고정된 **this**의 값을 가지고 있는 함수가 반환된다.
+
+즉, boundFunc는 새로운 함수가 된다.
+
+<br>
+
+```js
+let user = {
+  firstName: "Harry",
+};
+
+function func() {
+  console.log(this.firstName);
+}
+
+let funcUser = func.bind(user);
+funcUser(); // Harry
+```
+
+func.bind(user)에서 user 객체를 바인딩하였다. 허나 위의 코드처럼 funcUser는 값이 아닌 함수이기에 funcUser 함수를 실행해야 바인딩된 **this** 의 대상인 user의 firstName인 `Harry`가 반환된다.
+
+<br>
+
+```js
+let user = {
+  firstName: "Harry",
+  magic: function () {
+    console.log(`I,m ${this.firstName}`);
+  },
+};
+
+let funcUser = user.magic.bind(user);
+funcUser(); // I,m  Harry
+```
+
+- bind 메서드를 사용하면 객체를 따로 명시하지 않아도 객체 메서드 실행이 가능하다.
+
+```js
+user.magic() === funcUser();
+```
+
+<br>
+
+**2. bind 메서드 부분 적용**
+
+```js
+let bound = func.bind(context, [arg1], [arg2], ...)
+```
+
+<br>
+
+- bind 메서드는 **this**의 대상만 고정하는 것이 아니라 함수의 인수도 고정할 수 있다.
+
+<br>
+
+```js
+function greeting(a, b) {
+  return `${a}~ ${b}!`;
+}
+
+const result1 = greeting("Hi", "Everyone");
+console.log(result1); // Hi~ Everyone!
+
+const changeGreeting = greeting.bind(null, "Hello");
+// null로 this를 지정하면 this는 전역객체가 된다.
+
+const result2 = changeGreeting("Harry");
+console.log(result2); // Hello~ Harry!
+
+const result3 = changeGreeting("Harry", "Ron");
+console.log(result3); // Hello~ Harry!
+```
+
+greeting 함수는 인수 a와 b를 받는 함수이다.
+
+bind 메서드로 새로 만든 changeGreeting 함수는 this의 대상이 전역객체이고 greeting 함수의 a 인수가 "Hello"로 고정
+된 함수이다.
+
+<br>
+
+```js
+result1은 greeting 함수의 a 인수, b 인수로 각각 `Hi`, `Everyone`을 받아 결과값으로 반환되었다.
+
+result2는 changeGreeting 함수의 a 인수는 고정이므로, b 인수인 `Harry` 를 받아 결과값을 반환하였다.
+
+result3은 역시 changeGreeting 함수의 b 인수로 `Harry`를 받았고, 추가로 다른 값을 전달받았으나 해당 값은 함수에 지정된 인수가 아님으로 무시된다.
+```
+
+<br>
+
+---
 
 ## 참고자료
 
-- https://www.zerocho.com/category/JavaScript/post/5b0645cc7e3e36001bf676eb
+- [자바스크립트의 this는 무엇인가?](https://www.zerocho.com/category/JavaScript/post/5b0645cc7e3e36001bf676eb)
 
-- https://im-developer.tistory.com/96
+- [자바스크립트, this의 4가지 역할](https://im-developer.tistory.com/96)
+
+- [함수 바인딩](https://ko.javascript.info/bind)
