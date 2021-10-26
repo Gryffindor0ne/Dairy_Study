@@ -20,7 +20,7 @@
 
 <br>
 
-- `forEach` 메서드에서 콜백함수
+- `forEach` 메서드에서 콜백함수 ( `Synchronous(동기식) callback` )
 
 ```jsx
 const friends = ["Harry", "Hermione", "Ron"];
@@ -39,7 +39,7 @@ friends.forEach(function (eachName, index) {
 
 <br>
 
-- `setInterval` 함수에서 콜백함수
+- `setInterval` 함수에서 콜백함수 ( `Asynchronous(비동기식) callback` )
 
 ```jsx
 let count = 0;
@@ -67,7 +67,7 @@ setInterval 함수 내에 사용된 func 함수를 통해 0.5초마다 자동으
 
 <br>
 
-- `Jquery`에서의 콜백함수
+- `Jquery`에서의 콜백함수 ( `Asynchronous(비동기식) callback` )
 
 ```jsx
 $("#btn").click(function () {
@@ -122,7 +122,7 @@ console.log(window.fullName); //  Micheal Jordan
 
 <br>
 
-> ## **왜 그럴까?**
+> ### **왜 그럴까?**
 
 <br>
 
@@ -148,6 +148,8 @@ console.log(nbaSuperStar.fullName); // Ryan Lee
 <br>
 
 > ### 다시 코드를 보면,
+
+<br>
 
 ```jsx
 const nbaSuperStar = {
@@ -196,7 +198,7 @@ console.log(window.fullName); //  Micheal Jordan
 
 <br>
 
-> ## 그럼, 원하는대로 고쳐보자!
+> ### 그럼, 원하는대로 고쳐보자!
 
 <br>
 
@@ -225,3 +227,177 @@ console.log(nbaSuperStar.fullName); // Micheal Jordan
   <br>
 
 ---
+
+<br>
+
+> ## 콜백함수는 언제 사용되는가?
+
+<br>
+
+```jsx
+콜백함수는 주로 `비동기적인 작업` 을 하기 위해 사용된다.
+```
+
+> Notice >  
+> 물론 그렇다고 모든 콜백함수가 비동기적인 작업만 하는건 아니다. (예시를 보면 알 수 있다.)
+
+<br>
+
+자바스크립트는 Single Thread 언어이기 때문에 하나의 스레드에서 작업들이 순차적으로 수행된다. 그런데 동기적으로만 프로그램 언어가 실행된다면 프로그램이 멈추는 경우가 굉장히 많을 수 있다. 만약 시간이 오래 걸리는 작업(API 통신, setTimeout 등)을 만났을 때, 이 작업을 끝까지 기다리게 되면 그동안 다른 일을 못하게 된다. 매우 비효율적이라고 할 수 있다. 그렇기에 비동기적 처리 방식이 필요하다. 비동기적 처리 방식은 기다리지 않는다. 실행코드가 완료되지 않았더라도 다음 코드를 실행한다. 자바스크립트는 비동기적 처리가 가능하도록 설계가 되어있는 언어이다. 그리고, 이런 비동기 처리의 대표적인 방법이 바로 콜백함수을 이용하는 것이다.
+
+<br>
+
+> ### 비동기 처리 방식이란?
+
+<br>
+
+```jsx
+`비동기적 처리 방식` 이란 현재 실행중인 코드의 완료 여부와는 관계없이 다음 코드를 실행하는 방식이다. 이는 `동기적 처리 방식` 과 반대되는 개념으로 `동기적 처리 방식`에서는 현재 실행중인 코드가 완료되지 않으면 다음 코드를 실행하지 않는다. 일을 순차적으로 처리하는 방식이기에 어떤 코드 상의 흐름을 따라가면서 실행한다.
+```
+
+<br>
+
+**먼저, 동기적, 비동기적 방식의 차이에 대해 알아보자.**
+
+<br>
+
+- 예시 코드 1 ( `Synchronous(동기식)`)
+
+```jsx
+function func1() {
+  console.log("func1");
+  func2();
+}
+
+function func2() {
+  console.log("func2");
+  func3();
+}
+
+function func3() {
+  console.log("func3");
+}
+
+func1();
+
+/*
+func1
+func2
+func3
+*/
+```
+
+위의 예시 코드1 은 동기식 코드이다. 코드가 순차적으로 실행된다.
+
+<br>
+
+- 예시 코드 2 ( `Asynchronous(비동기식)` )
+
+```jsx
+function func1() {
+  console.log("func1");
+  func2();
+}
+
+function func2() {
+  setTimeout(function () {
+    console.log("func2");
+  }, 0);
+
+  func3();
+}
+
+function func3() {
+  console.log("func3");
+}
+/*
+func1
+func3
+
+func2
+*/
+```
+
+위 예제를 실행하면 setTimeout 함수에 두번째 인수를 0초로 설정하여도 순서대로 출력되지 않는다. 이는 setTimeout 함수가 비동기 함수이기 때문이다. 코드가 실행되는 과정에서 함수의 실행을 보류시키고 다음 코드를 진행한다.
+
+`console.log('func2')`를 보류시키고 func3 함수의 동기적 작업인 `console.log('func3')`을 실행한 후 마지막에 해당 함수를 실행하는 것이다. 특정 시간이 경과한 후까지 보류하는 것이지만 0초를 보류하는 설정이더라도 비동기적 작업이기에 다음 코드가 먼저 실행된다.
+
+<br>
+
+- 예시 코드 3
+
+```jsx
+console.log(`1`);
+setTimeout(() => console.log(`2`), 1000);
+console.log(`3`);
+
+// Synchronous(동기식) callback
+function printImmediately(print) {
+  print();
+}
+printImmediately(() => console.log(`hello`));
+
+// Asynchronous(비동기식) callback
+function printWithDelay(print, timeout) {
+  setTimeout(print, timeout);
+}
+
+printWithDelay(() => console.log(`async callback`), 2000);
+```
+
+- 자바스크립트는 위의 코드를 실행하면 다음과 같이 인식하고 실행한다.
+
+  함수 선언식이 호이스팅되서 모두 상위로 끌어올려진 상태에서 순차적으로 실행된다.
+
+<br>
+
+```jsx
+// Synchronous(동기식) callback
+function printImmediately(print) {
+  print();
+}
+
+// Asynchronous(비동기식) callback
+function printWithDelay(print, timeout) {
+  setTimeout(print, timeout);
+}
+
+console.log(`1`); // 동기적
+setTimeout(() => console.log(`2`), 1000); // 비동기적
+console.log(`3`); // 동기적
+printImmediately(() => console.log(`hello`)); // 동기적
+printWithDelay(() => console.log(`async callback`), 2000); // 비동기적
+
+/*
+-- 실행 결과 --
+1
+3
+hello
+
+2  (1초 후)
+async callback (2초 후)
+
+*/
+```
+
+순서대로 실행하면 동기적인 작업은 바로 실행되지만, 비동기적인 작업은 바로 실행되지 않는다. setTimeout 함수가 지정한 시간이 지난 후에 결과값을 반환한다.
+
+<br>
+
+```jsx
+console.log(`1`)는 바로 출력되지만, setTimeout 함수 안의 인자로 받은 콜백 함수 `() => console.log(`2`)` 는 비동기적으로 실행된다.
+console.log(`3`) 역시 바로 출력되고, printImmediately 함수는 콜백함수 `() => console.log(`hello`)` 를 인자로 받고 있지만, printImmediately 함수 자체가 동기적인 실행을 하는 함수임으로 바로 실행되어 결과를 출력한다.
+printWithDelay 함수는 인자로 받은 `() => console.log(`async callback`) `를 함수 내부의 비동기함수 setTimeout의 인자로 넘겨주기에 비동기적 방식으로 실행된다.
+```
+
+<br>
+
+<br>
+
+---
+
+## 참고자료
+
+- [드림코딩 엘리](https://www.youtube.com/watch?v=s1vpVCrT8f4)
+
+- [동기식 처리 모델 vs 비동기식 처리 모델](https://poiemaweb.com/js-async)
