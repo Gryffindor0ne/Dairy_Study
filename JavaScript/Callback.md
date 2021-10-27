@@ -252,7 +252,11 @@ console.log(nbaSuperStar.fullName); // Micheal Jordan
 <br>
 
 ```jsx
-`비동기적 처리 방식` 이란 현재 실행중인 코드의 완료 여부와는 관계없이 다음 코드를 실행하는 방식이다. 이는 `동기적 처리 방식` 과 반대되는 개념으로 `동기적 처리 방식`에서는 현재 실행중인 코드가 완료되지 않으면 다음 코드를 실행하지 않는다. 일을 순차적으로 처리하는 방식이기에 어떤 코드 상의 흐름을 따라가면서 실행한다.
+`비동기적 처리 방식` 이란 현재 실행중인 코드의 완료 여부와는 관계없이 다음 코드를 실행하는 방식이다.
+
+이는 `동기적 처리 방식` 과 반대되는 개념으로 `동기적 처리 방식`에서는 현재 실행중인 코드가 완료되지 않으면 다음 코드를 실행하지 않는다.
+
+일을 순차적으로 처리하는 방식이기에 어떤 코드 상의 흐름을 따라가면서 실행한다.
 ```
 
 <br>
@@ -386,11 +390,152 @@ async callback (2초 후)
 
 ```jsx
 console.log(`1`)는 바로 출력되지만, setTimeout 함수 안의 인자로 받은 콜백 함수 `() => console.log(`2`)` 는 비동기적으로 실행된다.
-console.log(`3`) 역시 바로 출력되고, printImmediately 함수는 콜백함수 `() => console.log(`hello`)` 를 인자로 받고 있지만, printImmediately 함수 자체가 동기적인 실행을 하는 함수임으로 바로 실행되어 결과를 출력한다.
-printWithDelay 함수는 인자로 받은 `() => console.log(`async callback`) `를 함수 내부의 비동기함수 setTimeout의 인자로 넘겨주기에 비동기적 방식으로 실행된다.
+
+console.log(`3`) 역시 바로 출력되고, printImmediately 함수는 콜백함수 `() => console.log(`hello`)` 를 인자로 받고 있지만,
+printImmediately 함수 자체가 동기적인 실행을 하는 함수임으로 바로 실행되어 결과를 출력한다.
+printWithDelay 함수는 인자로 받은 `() => console.log(`async callback`) `를
+함수 내부의 비동기함수 setTimeout의 인자로 넘겨주기에 비동기적 방식으로 실행된다.
 ```
 
 <br>
+
+---
+
+<br>
+
+> ## Callback Hell
+
+<br>
+
+자바스크립트에서 이벤트 처리나 서버 통신과 같은 비동기 처리를 위해 사용되는 콜백함수는 한 가지 문제점을 가지고 있다. 바로 콜백 지옥 (Callback Hell)이 발생할 수 있다는 점이다.
+
+<br>
+
+```
+콜백 지옥은 비동기 처리 로직을 위해 콜백 함수를 연속해서 사용할 때 발생하는 문제이다.
+```
+
+<br>
+
+- 콜백 지옥의 예시 코드
+
+```jsx
+setTimeout(
+  (name) => {
+    let favoriteDrink = name;
+    console.log(favoriteDrink);
+
+    setTimeout(
+      (name) => {
+        favoriteDrink += ", " + name;
+        console.log(favoriteDrink);
+
+        setTimeout(
+          (name) => {
+            favoriteDrink += ", " + name;
+            console.log(favoriteDrink);
+
+            setTimeout(
+              (name) => {
+                favoriteDrink += ", " + name;
+                console.log(favoriteDrink);
+              },
+              500,
+              "Cool lime Fizzio"
+            );
+          },
+          500,
+          "Mango Banana Blended"
+        );
+      },
+      500,
+      "Jeju Organic Green Tea"
+    );
+  },
+  500,
+  "Toffee Nut Latte"
+);
+
+/*
+-- 실행 결과 --
+Toffee Nut Latte  (0.5초)
+Toffee Nut Latte, Jeju Organic Green Tea  (1.0초)
+Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended  (1.5초)
+Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended, Cool lime Fizzio  (2.0초)
+*/
+```
+
+위의 코드는 0.5초 마다 음료의 리스트를 출력하는데, 각 콜백 함수는 음료의 이름을 전달하고 목록에는 그 이름을 추가하는 형태로 쓰여졌다. 콜백함수의 값을 그 다음 콜백함수에 전달하여 결과값이 누적되는 이런 꼬리에 꼬리를 무는 형식의 코딩 구조를 `콜백 지옥` 이라고 한다.
+
+보다시피, 값의 전달이 아래부터 시작하는 형식이라 가독성도 좋지 않고, 코드의 수정도 복잡하다.
+
+<br>
+
+- 콜백 지옥의 예시 코드 2
+
+```jsx
+const restaurantOrder = () => {
+  takeOrder((order) => {
+    passOrderToChef(order, (passedOrder) => {
+      cookOrder(passedOrder, (cookedOrder) => {
+        deliverOrder(cookedOrder, (deliveredOrder) => {
+          payOrder(deliveredOrder);
+        });
+      });
+    });
+  });
+};
+```
+
+<br>
+
+이런 콜백 지옥을 해결하는 가장 간단한 방법은 익명의 콜백함수를 기명함수로 전환하는 것이다.
+
+<br>
+
+- 예시코드 1 : 기명함수로 전환
+
+```jsx
+let favoriteDrink = "";
+
+const addLatte = (name) => {
+  favoriteDrink = name;
+  console.log(favoriteDrink);
+  setTimeout(addTea, 500, "Jeju Organic Green Tea");
+};
+
+const addTea = (name) => {
+  favoriteDrink += ", " + name;
+  console.log(favoriteDrink);
+  setTimeout(addBlended, 500, "Mango Banana Blended");
+};
+
+const addBlended = (name) => {
+  favoriteDrink += ", " + name;
+  console.log(favoriteDrink);
+  setTimeout(addFizzio, 500, "Cool lime Fizzio");
+};
+
+const addFizzio = (name) => {
+  favoriteDrink += ", " + name;
+  console.log(favoriteDrink);
+};
+
+setTimeout(addLatte, 500, "Toffee Nut Latte");
+
+/*
+-- 실행 결과 --
+Toffee Nut Latte  (0.5초)
+Toffee Nut Latte, Jeju Organic Green Tea  (1.0초)
+Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended  (1.5초)
+Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended, Cool lime Fizzio  (2.0초)
+*/
+```
+
+이와 같이 각각의 콜백함수를 변수에 할당하여 사용한다면 콜백 지옥에서 벗어날 수 있다.  
+그러나, 이 방법은 일회성 함수를 각각 변수에 일일이 할당하는 것이 꽤나 번거로운 작업이 될 수 있다.
+
+ES6에서는 이러한 콜백 지옥을 해결할 수 있는 훌륭한 방법이 도입되었는데, 그건 바로 `Promise` 라는 녀석이다.
 
 <br>
 
