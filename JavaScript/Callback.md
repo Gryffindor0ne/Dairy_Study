@@ -243,7 +243,9 @@ console.log(nbaSuperStar.fullName); // Micheal Jordan
 
 <br>
 
-자바스크립트는 Single Thread 언어이기 때문에 하나의 스레드에서 작업들이 순차적으로 수행된다. 그런데 동기적으로만 프로그램 언어가 실행된다면 프로그램이 멈추는 경우가 굉장히 많을 수 있다. 만약 시간이 오래 걸리는 작업(API 통신, setTimeout 등)을 만났을 때, 이 작업을 끝까지 기다리게 되면 그동안 다른 일을 못하게 된다. 매우 비효율적이라고 할 수 있다. 그렇기에 비동기적 처리 방식이 필요하다. 비동기적 처리 방식은 기다리지 않는다. 실행코드가 완료되지 않았더라도 다음 코드를 실행한다. 자바스크립트는 비동기적 처리가 가능하도록 설계가 되어있는 언어이다. 그리고, 이런 비동기 처리의 대표적인 방법이 바로 콜백함수을 이용하는 것이다.
+자바스크립트는 Single Thread 언어이기 때문에 하나의 스레드에서 작업들이 순차적으로 수행된다. 그런데 동기적으로만 프로그램 언어가 실행된다면 프로그램이 멈추는 경우가 굉장히 많을 수 있다. 만약 시간이 오래 걸리는 작업(API 통신, setTimeout 등)을 만났을 때, 이 작업을 끝까지 기다리게 되면 그동안 다른 일을 못하게 된다. 매우 비효율적이라고 할 수 있다.
+
+그렇기에 비동기적 처리 방식이 필요하다. 비동기적 처리 방식은 기다리지 않는다. 실행코드가 완료되지 않았더라도 다음 코드를 실행한다. 자바스크립트는 비동기적 처리가 가능하도록 설계가 되어있는 언어이다. 그리고, 이런 비동기 처리의 대표적인 방법이 바로 콜백함수을 이용하는 것이다.
 
 <br>
 
@@ -393,6 +395,7 @@ console.log(`1`)는 바로 출력되지만, setTimeout 함수 안의 인자로 �
 
 console.log(`3`) 역시 바로 출력되고, printImmediately 함수는 콜백함수 `() => console.log(`hello`)` 를 인자로 받고 있지만,
 printImmediately 함수 자체가 동기적인 실행을 하는 함수임으로 바로 실행되어 결과를 출력한다.
+
 printWithDelay 함수는 인자로 받은 `() => console.log(`async callback`) `를
 함수 내부의 비동기함수 setTimeout의 인자로 넘겨주기에 비동기적 방식으로 실행된다.
 ```
@@ -471,29 +474,11 @@ Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended, Cool lime Fizzio
 
 <br>
 
-- 콜백 지옥의 예시 코드 2
-
-```jsx
-const restaurantOrder = () => {
-  takeOrder((order) => {
-    passOrderToChef(order, (passedOrder) => {
-      cookOrder(passedOrder, (cookedOrder) => {
-        deliverOrder(cookedOrder, (deliveredOrder) => {
-          payOrder(deliveredOrder);
-        });
-      });
-    });
-  });
-};
-```
-
-<br>
-
 이런 콜백 지옥을 해결하는 가장 간단한 방법은 익명의 콜백함수를 기명함수로 전환하는 것이다.
 
 <br>
 
-- 예시코드 1 : 기명함수로 전환
+- 예시코드 : 기명함수로 전환
 
 ```jsx
 let favoriteDrink = "";
