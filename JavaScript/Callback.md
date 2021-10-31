@@ -444,7 +444,7 @@ setTimeout(
                 console.log(favoriteDrink);
               },
               500,
-              "Cool lime Fizzio"
+              "Cool Lime Fizzio"
             );
           },
           500,
@@ -464,7 +464,7 @@ setTimeout(
 Toffee Nut Latte  (0.5초)
 Toffee Nut Latte, Jeju Organic Green Tea  (1.0초)
 Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended  (1.5초)
-Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended, Cool lime Fizzio  (2.0초)
+Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended, Cool Lime Fizzio  (2.0초)
 */
 ```
 
@@ -498,7 +498,7 @@ const addTea = (name) => {
 const addBlended = (name) => {
   favoriteDrink += ", " + name;
   console.log(favoriteDrink);
-  setTimeout(addFizzio, 500, "Cool lime Fizzio");
+  setTimeout(addFizzio, 500, "Cool Lime Fizzio");
 };
 
 const addFizzio = (name) => {
@@ -513,7 +513,7 @@ setTimeout(addLatte, 500, "Toffee Nut Latte");
 Toffee Nut Latte  (0.5초)
 Toffee Nut Latte, Jeju Organic Green Tea  (1.0초)
 Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended  (1.5초)
-Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended, Cool lime Fizzio  (2.0초)
+Toffee Nut Latte, Jeju Organic Green Tea, Mango Banana Blended, Cool Lime Fizzio  (2.0초)
 */
 ```
 

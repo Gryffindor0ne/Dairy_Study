@@ -72,8 +72,8 @@ const promise = new Promise((resolve, reject) => {
 <br>
 
 > ### then, catch, finally : 결과값을 받아온다.
->
-> <br>
+
+<br>
 
 ```jsx
 promise
@@ -152,8 +152,8 @@ p.finally(function () {
 <br>
 
 > ### **For Example**
->
-> <br>
+
+<br>
 
 ```jsx
 let promise = new Promise((resolve, reject) => {
@@ -228,7 +228,7 @@ fetchNumber
   .then((num) => console.log(num)); // 20
 ```
 
-결과값을 받아 바로 다음 .then으로 넘겨주는 형식으로 진행된다.
+결과값을 받아 바로 다음 **.then** 으로 넘겨주는 형식으로 진행된다.
 
 <br>
 
@@ -259,7 +259,7 @@ delays();
     Hello, I'm in a  (0.8초)
     Promise!         (1.2초)
 
-  */
+*/
 ```
 
 <br>
@@ -297,7 +297,7 @@ new Promise((resolve) => {
   .then((prevName) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        let name = prevName + ", Cool lime Fizzio";
+        let name = prevName + ", Cool Lime Fizzio";
         console.log(name);
         resolve(name);
       }, 500);
@@ -323,7 +323,7 @@ const favoriteDrink = (name) => {
 favoriteDrink("Toffee Nut Latte")()
   .then(favoriteDrink("Jeju Organic Green Tea"))
   .then(favoriteDrink("Mango Banana Blended"))
-  .then(favoriteDrink("Cool lime Fizzio"));
+  .then(favoriteDrink("Cool Lime Fizzio"));
 ```
 
 <br>
