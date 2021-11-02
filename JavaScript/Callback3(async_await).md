@@ -500,4 +500,4 @@ delays();
 
 - [드림코딩 엘리\_비동기의 꽃 JavaScript async 와 await 그리고 유용한 Promise APIs](https://www.youtube.com/watch?v=aoQSOZfz3vQ)
 
--[Wes Bos](https://wesbos.com/javascript/12-advanced-flow-control/67-promises/#promiseall)
+- [Wes Bos](https://wesbos.com/javascript/12-advanced-flow-control/67-promises/#promiseall)
