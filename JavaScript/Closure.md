@@ -80,7 +80,7 @@ goodGuy();
 <br>
 
 ```
-goodGuy 함수에서 name, times 변수를 선언하고, goodGuy 함수의 내부 함수인 callMeByName 함수에서는 선언된 변수가 없이 그냥 `console.log`를 실행한다.
+goodGuy 함수에서 name, times 변수를 선언하고, goodGuy 함수의 내부 함수인 callMeByName 는 내부에서 선언된 변수 없이 그냥 `console.log`를 실행한다.
 
 callMeByName 함수의 `console.log`를 실행하려면 lexical environment에 변수 name, times가 있어야 하는데, 해당 환경에는 변수가 존재하지 않는다.
 
@@ -664,7 +664,7 @@ goodGuy 함수 외부에서 times의 값을 10으로 할당해보았다.
 **Closure**인 goodGuy 함수 내부의 변수인 times의 값은 변경되지 않는다.
 함수 내부의 변수는 외부에서 접근이 불가한 변수이기 때문이다.
 
-위에서 5를 할당한 times 변수는 선언은 되지 않았지만, 값이 할당된 goodGuy 함수 내부의 변수인 times와는 다른 변수이다.
+위에서 10을 할당한 times 변수는 선언은 되지 않았지만, 값이 할당된 goodGuy 함수 내부의 변수인 times와는 다른 변수이다.
 
 **Closure** 내부의 변수의 값이 외부에서 변경되지 않는 특징 때문에 상태를 안전하게 계속 유지할 수 있다.
 
@@ -794,7 +794,7 @@ let georgeID = createIdForCelebs[0];
 console.log(georgeID.id()); // 4
 ```
 
-georgeID.id()이 실행될 때 i의 값이 무엇인가가 중요한 점입니다. 여기서 i는 전역변수이기 떄문에 값에 영향을 미칩니다.
+georgeID.id()이 실행될 때 i의 값이 무엇인가가 중요한 점이다. 여기서 i는 전역변수이기 떄문에 값에 영향을 미친다.
 
 <br>
 
@@ -810,6 +810,7 @@ function celebrityIDCreator(theCelebrities) {
   for (var i = 0; i < theCelebrities.length; i++) {
     theCelebrities[i]["id"] = (function (j) {
       return (function () {
+        // IIFE를 사용
         return uniqueID + j;
       })();
     })(i);
@@ -841,6 +842,7 @@ console.log(bradID.id); // 2
 function celebrityIDCreator(theCelebrities) {
   let uniqueID = 1;
   for (let i = 0; i < theCelebrities.length; i++) {
+    // let을 사용
     theCelebrities[i]["id"] = (function (j) {
       return function () {
         return uniqueID + j;
