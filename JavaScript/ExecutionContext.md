@@ -10,36 +10,28 @@
 
 <br>
 
-> 실행 컨텍스트 : **실행할 코드에 제공할 환경 정보들을 모아놓은 객체** 또는 **실행 가능한 코드가 실행되기 위해 필요한 환경**
+## 📚 실행 컨텍스트 📚
 
-<br>
+### 실행할 코드에 제공할 환경 정보들을 모아놓은 객체 or 실행 가능한 코드가 실행되기 위해 필요한 환경
 
-1. 실행 가능한 코드
+### 📍 실행 가능한 코드
 
 - 전역 코드 : 전역 공간에 존재하는 코드
 - eval 코드 : eval 함수에 존재하는 코드
 - 함수 코드 : 함수 내 존재하는 코드
 
-> 우리가 흔히 실행 컨텍스트를 구성하는 방법은 _함수 코드_
+> 우리가 흔히 실행 컨텍스트를 구성하는 방법은 **_함수 코드_**
 
-<br>
-
-2. 실행에 필요한 정보
+### 📍 실행에 필요한 정보
 
 - 변수 : 전역변수, 지역변수, 매개변수, 객체의 프로퍼티
 - 함수 선언
 - 변수의 유효범위(Scope)
 - this
 
-<br>
+> 자바스크립트 엔진은 실행에 필요한 정보를 형상화하고 구분하기 위해 **_실행 컨텍스트_** 를 물리적 객체 형태로 관리한다.
 
-> 자바스크립트 엔진는 실행에 필요한 정보를 형상화하고 구분하기 위해 _실행 컨텍스트_ 를 물리적 객체 형태로 관리한다.
-
-<br>
-
-<br>
-
-- 예시
+### 👉🏼 **For Example**
 
 ```js
 var a = 1;
@@ -77,17 +69,21 @@ console.log(a); // 1
 
 <br>
 
-> 참고
+---
 
-- 스택 (stack)
+## 🔖 <span style="color:#b0bec5"> Additional </span>
 
-  LIFO(Last In First Out) 원칙을 따르는 선형 데이터 구조. 늦게 들어간 것이 제일 먼저 나온다.
+### **스택 (stack)**
 
-  ![1212](https://user-images.githubusercontent.com/79234473/137492809-6badd51a-81a0-430d-aa7e-aae94d615255.png)
+LIFO(Last In First Out) 원칙을 따르는 선형 데이터 구조. 늦게 들어간 것이 제일 먼저 나온다.
+
+![1212](https://user-images.githubusercontent.com/79234473/137492809-6badd51a-81a0-430d-aa7e-aae94d615255.png)
 
 <br>
 
-- 추가 예시
+---
+
+### 👉🏼 **For Example 2**
 
 ```js
 let a = "Hello World!";
@@ -105,26 +101,28 @@ function second() {
 first();
 
 console.log("Inside Global Execution Context");
-```
 
-```js
+/*
+
+-- 실행 결과 --
+
 Inside first function
 Inside second function
 Again inside first function
 Inside Global Execution Context
+
+*/
 ```
 
 ![실행컨텍스트2](https://user-images.githubusercontent.com/79234473/136782449-9ee21758-b40f-4805-b7fc-a65549b50d65.png)
 
-<br>
+---
 
-> 그럼, 실행 컨텍스트에는 어떤 정보가 담기는 걸까?
+### 그럼, 실행 컨텍스트에는 어떤 정보가 담기는 걸까?
 
-- 해당 내용은 책에서 설명한 부분으로 ES5 기준
+해당 내용은 책에서 설명한 ES5 기준으로 일단 설명.
 
-<br>
-
-```js
+```
 ExecutionContext = {
   LexicalEnvironment: [Lexical Environment],
   VariableEnvironment: [Lexical Environment],
@@ -132,72 +130,62 @@ ExecutionContext = {
 }  // [] 안의 내용은 type을 뜻한다.
 ```
 
-<br>
+```
+VariableEnvironment : 현재 실행 환경에 대한 변수나 참조에 대한 정보. 변경 사항 반영되지 않음.
 
-- VariableEnvironment : 현재 실행 환경에 대한 변수나 참조에 대한 정보. 변경 사항 반영되지 않음.
+LexicalEnvironment : 처음은 VariableEnvironment와 동일, 실시간 변경 사항 반영.
 
-- LexicalEnvironment : 처음은 VariableEnvironment와 동일, 실시간 변경 사항 반영.
+ThisBinding : 현재 Context에서의 This 대상 객체
+```
 
-- ThisBinding : 현재 Context에서의 This 대상 객체
+### **Lexical Environment 타입의 구성**
 
-<br>
-
-> Lexical Environment 타입의 구성
-
-```js
+```
 Lexical Environment = {
   environmentRecord: {},
   outerEnvironmentReference: {}
 }
 ```
 
-<br>
+```
+environmentRecord : 현재 Context에서 선언된 함수 혹은 변수들이 저장되는 공간.
 
-- environmentRecord : 현재 Context에서 선언된 함수 혹은 변수들이 저장되는 공간.
-
-- outerEnvironmentReference : 현재 Context를 기준으로 외부 Context를 참조하는 공간
-
-<br>
+outerEnvironmentReference : 현재 Context를 기준으로 외부 Context를 참조하는 공간
+```
 
 ---
 
-<br>
-
-### 여기서부터는 **코어 자바스크립트** 책에서 설명한 실행 컨텍스트의 개념을 ES6 기준으로 좀 더 상세하게 알아보고자 한다.
+### `코어 자바스크립트` 책에서는 실행 컨텍스트의 개념을 ES5 기준으로 설명하였는데, 여기서부터는 내가 추가로 공부한 ES6 기준으로 좀 더 상세하게 설명하고자 한다.
 
 <br>
 
----
-
-<br>
-
-## 실행 컨텍스트의 구조
+## 📚 실행 컨텍스트의 구조
 
 ![EC2](https://user-images.githubusercontent.com/79234473/137242638-c42373f2-64ec-4475-bccc-819ff5da1896.png)
 
-## 실행 컨텍스트는 어떻게 만들어지는가?
+---
 
-<br>
+## 📚 실행 컨텍스트는 어떻게 만들어지는가?
 
-실행 컨텍스트는 2개의 단계를 거쳐 생성된다.
+### **실행 컨텍스트는 2개의 단계를 거쳐 생성된다.**
 
 1. 생성단계 (Creation Phase)
 2. 실행단계 (Execution Phase)
 
 <br>
 
-# **생성단계 (Creation Phase)**
+---
 
-<br>
+## 🤵🏽‍♂️ **생성단계 (Creation Phase)**
 
 실행 컨텍스트(Execution Context, 줄여서 EC)는 생성단계에서 다음 2개의 컴포넌트를 생성한다.
 
-1. LexicalEnvironment
-2. VariableEnvironment
+1. **LexicalEnvironment**
+2. **VariableEnvironment**
 
 <br>
 
-- 코드로 보자면,
+코드로 보면,
 
 ```js
 ExecutionContext = {
@@ -208,33 +196,25 @@ ExecutionContext = {
 
 > 어라, 어디서 본 듯한 코드인데...
 
-<br>
-
 ### 그렇다. 위에서 나왔다. EC에 어떤 정보가 들어가는지 얘기하다가...
 
+🪶 ES6에서는 `ThisBinding` 이 EC에 포함되지 않고 이후 나오는 Lexical Environment 부분에 포함되었다.
+
 <br>
 
-```js
-ES6에서는 `ThisBinding` 이 EC에 포함되지 않고 이후 나오는 Lexical Environment 부분에 포함되었다.
+## 자 그럼 먼저, EC 의 Lexical Environment에 대해 알아보자.
+
+## 🪃 Lexical Environment
+
+```
+Lexical Environment는 자바스크립트 코드에서 변수나 함수 등의 식별자를 정의하는데 사용하는 객체로 생각하면 쉽다.
+(또는, 식별자들에 대한 정보를 매핑한 모음)
+
+Lexical Environment는 식별자-변수 매핑을 보유하는 구조이다.
+(여기서 식별자는 변수의 이름을 나타낸다.)
 ```
 
-<br>
-
-> ## 자 그럼, **EC 의 Lexical Environment**에 대해 알아보자.
-
-<br>
-
-## Lexical Environment
-
-```js
-Lexical Environment는 자바스크립트 코드에서 변수나 함수 등의 식별자를 정의하는데 사용하는 객체로 생각하면 쉽다. (또는, 식별자들에 대한 정보를 매핑한 모음)
-
-Lexical Environment는 식별자-변수 매핑을 보유하는 구조이다. (여기서 식별자는 변수의 이름을 나타낸다.)
-```
-
-<br>
-
-- 간단한 예시를 보자.
+> 간단한 예시를 보자.
 
 ```js
 let name = "Harry";
@@ -245,9 +225,7 @@ function magic() {
 }
 ```
 
-<br>
-
-- 위의 예시코드를 Lexical Environment로 표현한다면,
+> 위의 예시코드를 Lexical Environment로 표현한다면,
 
 ```js
 lexicalEnvironment = {
@@ -257,27 +235,23 @@ lexicalEnvironment = {
 }
 ```
 
-     Lexical Environment은 위와 같이 식별자들에 대한 정보를 매핑한다.
+Lexical Environment은 위와 같이 식별자들에 대한 정보를 매핑한다.
 
-<br>
+---
 
-> 그럼, Lexical Environment에는 어떤 것이 있을까?
+### 그럼, Lexical Environment에는 어떤 것이 있을까?
 
-<br>
+### 🪄 Lexical Environment의 종류
 
-- Lexical Environment는 다음의 3가지 컴포넌트를 가진다.
+Lexical Environment는 다음의 3가지 컴포넌트를 가진다.
 
-1. Environment Record
-2. Reference to the outer environment
-3. ThisBinding
+1. **Environment Record**
+2. **Reference to the outer environment**
+3. **ThisBinding**
 
-<br>
+## 🪡 Environment Record
 
-## Environment Record
-
-<br>
-
-```js
+```
 Environment Record는 식별자들의 바인딩을 기록하는 객체를 말한다.
 간단히 말해 변수, 함수 등이 기록되는 곳이다.
 
@@ -294,21 +268,25 @@ Environment Record는 식별자들의 바인딩을 기록하는 객체를 말한
 
 <br>
 
-- Declarative Environment Record
+**Declarative Environment Record**
 
-  > 변수 및 함수 선언을 저장.
-
-<br>
-
-- Object Environment Record
-
-  > 변수 및 함수 선언 외에 전역 바인딩 개체(window object in browsers)도 저장.
-
-  > > `The lexical environment for global code contains a objective environment record`
+> 변수 및 함수 선언을 저장.
 
 <br>
 
-**참고로 추가 설명**
+**Object Environment Record**
+
+> 변수 및 함수 선언 외에 전역 바인딩 개체(window object in browsers)도 저장.
+
+```
+ `The lexical environment for global code contains a objective environment record`
+```
+
+<br>
+
+---
+
+## 🔖 <span style="color:#b0bec5"> Additional </span>
 
 함수 코드가 실행되면 Environment Record에 **arguments** object가 포함된다.
 
@@ -316,7 +294,7 @@ Environment Record는 식별자들의 바인딩을 기록하는 객체를 말한
 
 <br>
 
-- 예시를 보면,
+> 예시를 보면,
 
 ```js
 let name = 'Harry';
@@ -329,28 +307,29 @@ function magic(name, spell) {
 magic(name, spell)
 
 // arguments object
-arguments : {0: 'Harry', 1: 'Aquamenti', length: 2}
+arguments : {0: 'Harry', 1: 'Aquamenti', length: 2}  // 함수 EC가 실행되면 생성된다.
 ```
 
+---
+
+## 🪡 Reference to the Outer Environment
+
 <br>
 
-## Reference to the Outer Environment
-
-<br>
-
-```js
+```
 Reference to the Outer Environment(줄여서 Outer)는 외부의 lexical environment에 액세스할 수 있음을 의미한다.
 
-이는 JavaScript 엔진이 현재 lexical environment에서 변수를 찾을 수 없는 경우 외부 환경 내부에서 변수를 찾을 수 있음을 의미한다.
+다시 말해, 변수를 탐색하는 과정에서 현재 실행 컨텍스트 내의 참조할 변수가 없다면
 
-다시 말해, 변수를 탐색하는 과정에서 현재 실행 컨텍스트 내의 참조할 변수가 없다면 상위 lexical environment에 접근하여 변수를 찾는 매커니즘이다.
+상위 lexical environment에 접근하여 변수를 찾는 매커니즘이다.
+
 
 ES3에서 말하던 Scope Chain과 동일한 개념으로 ES5부터는 `Lexical nesting structure`로 불린다.
 ```
 
 <br>
 
-- 예시 코드를 보자.
+### 👉🏼 **For Example**
 
 ```js
 const global = "I'm global";
@@ -359,19 +338,32 @@ function first() {
   function second() {
     const secondConst = "I'm secondConst";
     function third() {
-      console.log(secondConst); // "I'm secondConst"
-      console.log(firstConst); // "I'm firstConst"
-      console.log(global); // "I'm global"
-      console.log(thirdConst); // Reference Error : thirdConst is not defined
+      console.log(secondConst);
+      console.log(firstConst);
+      console.log(global);
+      console.log(thirdConst);
     }
     third();
   }
   second();
 }
 first();
+
+/*
+
+-- 실행 결과 --
+
+"I'm secondConst"
+"I'm firstConst"
+"I'm global"
+Reference Error : thirdConst is not defined
+
+*/
 ```
 
-- 위 코드를 단순하게 표현하자면 아래와 같다. (일부 상세한 코드는 생략)
+<br>
+
+위 코드를 단순하게 표현하자면 아래와 같다. (일부 상세한 코드는 생략)
 
 ```js
 GlobalEnvironment = {
@@ -400,15 +392,13 @@ secondEnvironment = {
 
 ![LE](https://user-images.githubusercontent.com/79234473/137315961-9c4a4b95-909e-4c7b-a4c6-af3d3ca9aa4f.png)
 
-```
-위 그림에서처럼 각 lexical environment에서 `Outer`는 부모의 lexical environment를 가리킨다.
-```
+🖍 위 그림에서처럼 각 lexical environment에서 `Outer`는 부모의 lexical environment를 가리킨다.
 
 <br>
 
 ![LE2](https://user-images.githubusercontent.com/79234473/137315966-a4a48a5c-45f0-4ff4-8f49-0e11395386dc.png)
 
-예시 코드에서 third 함수가 실행되었을 때
+🖌 예시 코드에서 third 함수가 실행되었을 때
 secondConst, firstConst, global, thirdConst 변수를 찾게 될 것이다.
 
 위의 그림에서는 secondConst, thirdConst를 예로 들었는데 보다시피 현재 LexicalEnvironment에 값이 있는지 확인하고 변수가 없으면 부모의 값으로 이동한다.
@@ -419,51 +409,52 @@ secondConst의 경우 second LexicalEnvironment에 값이 존재하므로 그 �
 
 <br>
 
-```
+### 🪢 POINT 🪢
+
 이것이 일반적으로 듣던 스코프 체인이다.
 
-그러나 중요한 점은 부모의 환경에 연결되는 Outer(외부 환경)는 함수가 호출될 때가 아니라 `선언될 때 결정` 된다.
-```
+그러나 중요한 점은 부모의 환경에 연결되는 Outer(외부 환경)는 함수가 호출될 때가 아니라 **`선언될 때 결정`** 된다.
 
-<br>
-
-- 다음 코드를 보자.
+### 🪄 다음 코드를 보자.
 
 ```js
 let i = 1;
+
 function foo() {
   let i = 2;
   bar();
 }
+
 function bar() {
   console.log(i);
 }
+
 foo(); // 1
 ```
 
-```js
+```
 위의 결과값이 2가 아닌 `1`이 나오는 이유는?
 
-`Outer`는 부모를 둘러싼 함수가 아니라 부모의 LexicalEnvironment이기 때문이다.
+bar 함수의 `Outer`는 둘러싼 함수(foo 함수)가 아니라 부모의 LexicalEnvironment(global)이기 때문이다.
 ```
 
+---
+
+## 🪡 ThisBinding
+
 <br>
 
-## ThisBinding
-
-<br>
-
-```js
+```
 Global execution context에서 this는 global obejct를 나타낸다.
 (예를 들어 브라우저라면 Window Object)
 
-Function execution context에서 this 값은 함수가 호출되는 방식에 따라 다릅니다.
-객체 참조에 의해 호출되면 this 값이 해당 객체로 설정되고, 그렇지 않으면 this 값이 전역 객체로 설정되거나 정의되지 않는다. _ undefined
+Function execution context에서 this 값은 함수가 호출되는 방식에 따라 다르다.
+
+객체 참조에 의해 호출되면 this 값이 해당 객체로 설정되고,
+그렇지 않으면 this 값이 전역 객체로 설정되거나 정의되지 않는다. _ undefined
 ```
 
-<br>
-
-- 예시를 보자.
+### 👉🏼 **For Example**
 
 ```js
 const magician = {
@@ -481,10 +472,10 @@ calculateAge(); // NaN
 
 <br>
 
-- `magician.calAge()`을 실행하였을 때 **this**는 magician 객체가 된다. 객체를 참조하면서 호출되었기 때문이다.
+`magician.calAge()`을 실행하였을 때 **this**는 magician 객체가 된다. 객체를 참조하면서 호출되었기 때문이다.
 
 ```js
-this : object
+this = object
 
 {
   name: "Harry",
@@ -497,7 +488,7 @@ this : object
 
 <br>
 
-- `calculateAge()`이 실행되면 **this**는 객체 참조가 없기 때문에 전역 객체를 참조한다. 그리하여 결과적으로 값이 NaN이 된다.
+`calculateAge()`이 실행되면 **this**는 객체 참조가 없기 때문에 전역 객체를 참조한다. 그리하여 결과적으로 값이 NaN이 된다.
 
 ```js
 this = window;
@@ -507,31 +498,41 @@ this = window;
 
 <br>
 
-> ## **EC - Variable Environment**
+[**This** 에 관한 내용은 뒤에서 따로 다룰 예정]
 
 <br>
 
-## Variable Environment
+---
 
 <br>
 
-Variable Environment는 EC 내에서 VariableStatements에 의해 생성된 바인딩을 EnvironmentRecord에 보관하는 Lexical Environment로서, 기본적으로 Lexical Environment가 가지는 모든 속성과 구성 요소를 동일하게 가지고 있다.
+## **EC - Variable Environment**
 
 <br>
 
-```js
-ES6에서는 LexicalEnvironment와  VariableEnvironment 차이점으로 다음 1가지 포인트를 얘기한다.
-
-LexicalEnvironment는 함수 선언과 변수(let 및 const) 바인딩을 저장하는 데 사용되는 반면
-VariableEnvironment는 변수(var) 바인딩만 저장하는 데 사용된다.
-
-다시 말해, LexicalEnvironment은 함수와 let, const 키워드로 선언한 변수에 사용되고
-VariableEnvironment는 var 키워드로 선언한 변수에 사용된다고 볼 수 있다.
-```
+## 🪃 Variable Environment
 
 <br>
 
-# **실행단계 (Execution Phase)**
+**Variable Environment**는 EC 내에서 VariableStatements에 의해 생성된 바인딩을 EnvironmentRecord에 보관하는 Lexical Environment로서, 기본적으로 Lexical Environment가 가지는 모든 속성과 구성 요소를 동일하게 가지고 있다.
+
+<br>
+
+## ☝🏼 Difference ☝🏼
+
+🪄 ES6에서는 **LexicalEnvironment**와 **VariableEnvironment** 차이점으로 다음 1가지 포인트를 얘기한다.
+
+LexicalEnvironment는 함수 선언과 변수(**let 및 const**) 바인딩을 저장하는 데 사용되는 반면,
+
+VariableEnvironment는 변수(**var**) 바인딩만 저장하는 데 사용된다.
+
+> 다시 말해, LexicalEnvironment은 함수와 **let, const** 키워드로 선언한 변수에 사용되고, VariableEnvironment는 **var** 키워드로 선언한 변수에 사용된다고 볼 수 있다.
+
+<br>
+
+---
+
+## 🤵🏽‍♂️ **실행단계 (Execution Phase)**
 
 <br>
 
@@ -539,7 +540,7 @@ VariableEnvironment는 var 키워드로 선언한 변수에 사용된다고 볼 
 
 <br>
 
-- 예시 코드를 보자.
+### 👉🏼 **For Example**
 
 ```js
 let name = "Harry";
@@ -554,11 +555,11 @@ function times(count) {
 say = times(10);
 ```
 
-- 위의 코드가 실행되면 자바스크립트 엔진은 전역코드를 실행하기 위해 전역 컨텍스트를 생성한다.
+위의 코드가 실행되면 자바스크립트 엔진은 전역코드를 실행하기 위해 전역 컨텍스트를 생성한다.
 
 <br>
 
-> 그림을 보면서 이해해보자!
+### 🪅 그림을 보면서 이해해보자!
 
 <br>
 
@@ -576,12 +577,13 @@ EC 생성단계에서는 코드 실행에 필요한 LexicalEnvironment와 Variab
 
 <br>
 
-1. 전역 EC 생성단계
+1.전역 EC 생성단계
 
-```js
+```
 전역 EC 생성단계에서는 다음과 같은 것들이 일어난다.
 
-times 함수와 let으로 선언된 name 변수, const로 선언된 spell 변수가 LexicalEnvironment의 EnvironmentRecord로 생성된다. (값은 할당되지 않는다.)
+times 함수와 let으로 선언된 name 변수, const로 선언된 spell 변수가 LexicalEnvironment의 EnvironmentRecord로 생성된다.
+(값은 할당되지 않는다.)
 
 VariableEnvironment의 EnvironmentRecord엔 var로 선언된 say 변수가 선언됨과 동시에 undefined의 값이 할당된다.
 
@@ -596,9 +598,9 @@ VariableEnvironment의 EnvironmentRecord엔 var로 선언된 say 변수가 선�
 
 <br>
 
-2. 전역 EC 실행단계
+2.전역 EC 실행단계
 
-```js
+```
 전역 EC가 실행되면
 
 let, const로 선언된 변수들의 값이 할당된다.
@@ -616,9 +618,9 @@ let, const로 선언된 변수들의 값이 할당된다.
 
 <br>
 
-3. 함수 EC 생성단계
+3.함수 EC 생성단계
 
-```js
+```
 times 함수가 실행되면 함수 EC가 생성된다.
 arguments 객체와 var로 선언된 add 변수가 각각 LexicalEnvironment, VariableEnvironment에 생성된다.
 
@@ -635,9 +637,9 @@ arguments 객체와 var로 선언된 add 변수가 각각 LexicalEnvironment, Va
 
 <br>
 
-4. 함수 EC 실행단계 1-1.
+4.함수 EC 실행단계 1-1.
 
-```js
+```
 var로 선언된 변수 add의 값이 할당된다.
 
  :: 콜스택에 함수 EC가 전달된다.
@@ -653,9 +655,9 @@ var로 선언된 변수 add의 값이 할당된다.
 
 <br>
 
-5. 함수 EC 실행단계 1-2.
+5.함수 EC 실행단계 1-2.
 
-```js
+```
 함수가 실행되어 값을 리턴하고 함수가 종료된다.
 
  :: 함수 EC가 종료됨과 동시에 콜스택에서 제거된다.
@@ -671,9 +673,9 @@ var로 선언된 변수 add의 값이 할당된다.
 
 <br>
 
-6. 전역 EC 실행 종료
+6.전역 EC 실행 종료
 
-```js
+```
 함수의 리턴값이 전달되어 say 변수에 값이 할당되고 모든 과정이 종료되어 전역 EC도 종료된다.
 
 :: 콜스택에서 전역 EC도 제거된다.
@@ -685,37 +687,35 @@ var로 선언된 변수 add의 값이 할당된다.
 
 ---
 
-### 여기서 잠깐!
+### 💡 **NOTICE**
 
-<br>
-
-### **호이스팅**
-
-<br>
+### **호이스팅(Hoisting)**
 
 > 자바스크립트는 ES6에서 도입된 let, const를 포함하여 모든 선언(var, let, const, function, function\*, class)을 호이스팅한다.
 
-> 호이스팅(Hoisting)이란, var 선언문이나 function 선언문 등을 해당 스코프의 선두로 옮긴 것처럼 동작하는 특성을 말한다.
+### var 선언문이나 function 선언문 등을 해당 스코프의 선두로 옮긴 것처럼 동작하는 특성을 말한다.
 
 <br>
 
-```js
+```
 위의 예시에서 보면,
 
-EC의 생성 단계에서 var로 선언한 변수는 `undefined` 라는 값을 가지고, let, const로 선언된 변수는 값을 가지지 않는다. (uninitialized)
+EC의 생성 단계에서 var로 선언한 변수는 `undefined` 라는 값을 가지고,
+let, const로 선언된 변수는 값을 가지지 않는다. (uninitialized)
 
 이것은 EC의 생성 단계에서 코드에서 변수 및 함수 선언을 검색하고, 함수 선언이 환경에 완전히 저장되는 동안
-변수는 초기에 정의되지 않은 상태(undefined)(var의 경우)로 설정되거나 초기화되지 않은 상태(uninitialized)(let과 const의 경우)로 설정되는데,
+변수는 초기에 정의되지 않은 상태(undefined)(var의 경우)로 설정되거나
+초기화되지 않은 상태(uninitialized)(let과 const의 경우)로 설정되는데,
 
-var로 선언된 변수는 `undefined` 라는 값이 존재함으로 참조가 가능하지만
+var로 선언된 변수는 `undefined` 라는 값이 존재함으로 참조가 가능하지만,
 let, const로 선언된 변수는 비어 있는 상태이기 때문에 참조가 불가하여 Reference Error 가 난다.
 
-var로 선언된 변수는 실제 값이 할당되기 전, 변수가 선언되는 것과 동시에 초기화가 이루어진다. 초기값으로 `undefined`를 가지는 것도 이 때문이다.
-(메모리 공간이 확보된다.)_(`변수 호이스팅`)
+var로 선언된 변수는 실제 값이 할당되기 전, 변수가 선언되는 것과 동시에 초기화가 이루어진다.
+초기값으로 `undefined`를 가지는 것도 이 때문이다. (메모리 공간이 확보된다.)_(`변수 호이스팅`)
 
-let, const로 선언된 변수는 자바스크립트 엔진이 실행시 변수 선언문을 만나기 전까지 초기화되지 않기 때문에 `일시적 사각지대(TDZ)` 라는 곳에 빠진다.
-즉, 변수가 초기화되지 않았다는 것은 메모리 공간이 확보되지 않았다는 것이고 이로 인해 변수를 참조할 수 없다.
-
+let, const로 선언된 변수는 자바스크립트 엔진이 실행시 변수 선언문을 만나기 전까지 초기화되지 않기 때문에
+`일시적 사각지대(TDZ)` 라는 곳에 빠진다.
+즉, 변수가 초기화되지 않았다는 것은 메모리 공간이 확보되지 않았다는 뜻으로, 이로 인해 변수를 참조할 수 없다.
 ```
 
 <br>
@@ -724,11 +724,13 @@ let, const로 선언된 변수는 자바스크립트 엔진이 실행시 변수 
 해당 스코프의 시작부터 초기화 단계까지의 구간을 `TDZ(Temporal Dead Zone)`라고 한다.
 ```
 
-## <br>
+<br>
+
+---
 
 ## 참고자료
 
-- https://262.ecma-international.org/6.0/#sec-lexical-environments
+- [sec-lexical-environments](https://262.ecma-international.org/6.0/#sec-lexical-environments)
 
 - [자바스크립트 함수 - Lexical Environment](https://meetup.toast.com/posts/129)
 

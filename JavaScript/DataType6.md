@@ -6,23 +6,25 @@
 
 <br>
 
-## 01 데이터타입
+---
+
+## 👨🏻‍💻 undefined VS null
 
 <br>
 
-> ### undefined VS null
+---
+
+## 🤪 undefined
+
+### **자바스크립트에서 특별히 명시하지 않는 경우, 값이 존재하지 않으면 자동적으로 부여되는 값.**
 
 <br>
 
-## undefined
+> 다음의 경우들이 해당된다.
 
 <br>
 
-- 자바스크립트에서 특별히 명시하지 않는 경우, 값이 존재하지 않으면 자동적으로 부여되는 값.
-
-- 다음의 경우들이 해당된다.
-
-1.  값을 할당하지 않은 변수의 값
+1.값을 할당하지 않은 변수의 값
 
 ```js
 let name;
@@ -31,7 +33,7 @@ console.log(name); // undefined  <- 값이 존재하지 않음. 변수를 선언
 
 <br>
 
-2.  존재하지 않는 프로퍼티에 접근할 때
+2.존재하지 않는 프로퍼티에 접근할 때
 
 ```js
 const teamMember = {
@@ -46,7 +48,7 @@ console.log(teamMember.c); // undefined   <- 없는 프로퍼티
 
 <br>
 
-3.  함수 리턴을 하지 않았을 때
+3.함수 리턴을 하지 않았을 때
 
 ```js
 function checkMember(name) {
@@ -64,13 +66,13 @@ console.log(checkMember("Harry")); // undefined
 
 <br>
 
-## null
+---
 
-<br>
+## 🤪 null
 
-- 값이 '비어있음'을 명시적으로 나타낼 때 사용하는 값.
+### **값이 '비어있음'을 명시적으로 나타낼 때 사용하는 값.**
 
-- 주의사항 : typeof 메서드 사용시 object 가 나온다.
+> 주의사항 : typeof 메서드 사용시 object 가 나온다.
 
 <br>
 
@@ -88,16 +90,15 @@ console.log(check === null); // true
 console.log(check === undefined); // false
 ```
 
-- null은 undefined와 구분하려면 '==='를 사용해야 한다.
+🤔 null은 undefined와 구분하려면 '==='를 사용해야 한다.
 
 <br>
 
-> null check
+### 🕵🏼‍♂️ **null check**
 
-- 코드를 짜다보면 어떤 값이 null 혹은 undefined인지 확인하는 작업이 필요할 때가 있다.
+> 코드를 짜다보면 어떤 값이 null 혹은 undefined인지 확인하는 작업이 필요할 때가 있다.
 
-  그럴 때 하는 것이 바로
-  null check.
+> > 그럴 때 하는 것이 바로 `null check.`
 
 <br>
 

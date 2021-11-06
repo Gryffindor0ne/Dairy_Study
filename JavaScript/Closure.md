@@ -244,7 +244,7 @@ Closures have access to the outer function’s variable even after the outer fun
 
  <br>
 
-## **NOTICE**
+## 💡 **NOTICE**
 
 > 이 현상을 일으키는 주요 대상인 함수 자체를 통상적으로 `Closure` 라고 많이 얘기하지만, 개념적으로는 이런 현상 그 자체가 `Closure` 라고 보는 것이 맞다.
 
@@ -555,7 +555,11 @@ console.log(callMeByName2()); // Ryan 3 called
 
 위에서 본 예시코드이다.
 
-최신 상태를 유지한다는 말은 callMeByName 함수가 참조하고 있는 변수인 times가 **Closure** 내부에서 지속적으로 참조되고 있기 때문에 현재 값이 계속 유지되는 것을 뜻한다. 그렇기에 callMeByName2가 호출될 때마다 times 변수의 값을 기억하고 있다가 숫자를 증가시키는 것이다. 이는 굳이 전역변수를 사용하지 않고, 최신 상태를 유지할 수 있다.
+최신 상태를 유지한다는 말은 callMeByName 함수가 참조하고 있는 변수인 times가 **Closure** 내부에서 지속적으로 참조되고 있기 때문에 현재 값이 계속 유지되는 것을 뜻한다.
+
+그렇기에 callMeByName2가 호출될 때마다 times 변수의 값을 기억하고 있다가 숫자를 증가시키는 것이다.
+
+이는 굳이 전역변수를 사용하지 않고, 최신 상태를 유지할 수 있다.
 
 <br>
 
