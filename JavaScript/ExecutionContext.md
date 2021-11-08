@@ -122,12 +122,12 @@ Inside Global Execution Context
 
 해당 내용은 책에서 설명한 ES5 기준으로 일단 설명.
 
-```
+```js
 ExecutionContext = {
   LexicalEnvironment: [Lexical Environment],
   VariableEnvironment: [Lexical Environment],
   ThisBinding: [object]
-}  // [] 안의 내용은 type을 뜻한다.
+}   // [] 안의 내용은 type을 뜻한다.
 ```
 
 ```
@@ -140,7 +140,7 @@ ThisBinding : 현재 Context에서의 This 대상 객체
 
 ### **Lexical Environment 타입의 구성**
 
-```
+```js
 Lexical Environment = {
   environmentRecord: {},
   outerEnvironmentReference: {}
@@ -228,7 +228,7 @@ function magic() {
 > 위의 예시코드를 Lexical Environment로 표현한다면,
 
 ```js
-lexicalEnvironment = {
+LexicalEnvironment = {
   name : "Harry",
   job: "Magician",
   magic: <ref. to magic function>
@@ -594,7 +594,7 @@ VariableEnvironment의 EnvironmentRecord엔 var로 선언된 say 변수가 선�
 
 <br>
 
-![EC_2](https://user-images.githubusercontent.com/79234473/137443322-73cd75a6-dd24-42c7-b96f-de08db86f614.png)
+![EC_fix_img1](https://user-images.githubusercontent.com/79234473/140608031-e6a16ca4-b3da-4b58-a51b-0b253c057472.png)
 
 <br>
 
@@ -669,7 +669,7 @@ var로 선언된 변수 add의 값이 할당된다.
 
 <br>
 
-![EC_6](https://user-images.githubusercontent.com/79234473/137443336-358fcb75-8910-43b4-a1cb-4d29f0dd0827.png)
+![EC_fix_img2](https://user-images.githubusercontent.com/79234473/140608032-f06f3fbb-a8de-4904-81ae-89995351ccfb.png)
 
 <br>
 
