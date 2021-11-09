@@ -70,11 +70,11 @@ scopeB 함수가 실행되면 새로운 value 변수를 선언하면 `B!`가 할
 
 <br>
 
-![scope](https://user-images.githubusercontent.com/79234473/137902318-e6df5fbd-2732-4e51-bf81-3db2a0e27abe.png)
+![1](https://user-images.githubusercontent.com/79234473/140868557-39273d04-671a-49ba-89a7-3c12dd183aef.png)
 
 <br>
 
-![scope2](https://user-images.githubusercontent.com/79234473/137902345-b4c08739-cf37-4511-a5c6-1c225d7ed431.png)
+![2](https://user-images.githubusercontent.com/79234473/140868561-d13bf829-d092-4b56-ad76-466d4f7adfcc.png)
 
 <br>
 
@@ -104,11 +104,11 @@ console.log(value); // Global!
 
 <br>
 
-![scope3](https://user-images.githubusercontent.com/79234473/137902356-66e29647-9eb3-488c-b89d-ffdebc6a61c4.png)
+![3](https://user-images.githubusercontent.com/79234473/140868565-96d3a376-bd31-43f3-9c51-db8c1ed2db94.png)
 
 <br>
 
-![scope4](https://user-images.githubusercontent.com/79234473/137902358-1b863ce7-3aa9-465c-8550-c865f39ee4f3.png)
+![4](https://user-images.githubusercontent.com/79234473/140868568-05be8a33-42f7-4fb5-b9d2-72c146ac5f25.png)
 
 <br>
 
@@ -138,11 +138,11 @@ console.log(value); // Global!
 
   <br>
 
-  ![scope5](https://user-images.githubusercontent.com/79234473/137902367-ef0789fb-67ee-4ec9-8d51-36e630aba147.png)
+![5](https://user-images.githubusercontent.com/79234473/140868571-a90a1163-b65f-470a-9ae3-0a02112459aa.png)
 
   <br>
 
-  ![scope6](https://user-images.githubusercontent.com/79234473/137902374-017d6ce0-e548-4362-93f5-7f7545726079.png)
+![6](https://user-images.githubusercontent.com/79234473/140868573-1e092bb8-1dce-481c-94ed-1e353ab515aa.png)
 
   <br>
 
