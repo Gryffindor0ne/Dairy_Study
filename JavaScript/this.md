@@ -45,14 +45,14 @@ console.log(this)를 출력하니 window 객체가 나온다. 밑에 있는 cons
 ```js
 var name = "Harry Potter";
 
-function magic() {
+function callByName() {
   console.log(this.name);
 }
 
-magic(); // Harry Potter
+callByName(); // Harry Potter
 
 var magician = {
-  method: magic,
+  method: callByName,
   name: "Hermione",
 };
 
@@ -61,7 +61,7 @@ magician.method(); // Hermione
 
 위의 예시를 보면, `magic()`의 구문은 함수 자체로 함수를 호출한 예시이고, `magician.method()`은 메서드로서 함수를 호출한 예시이다.
 
-var로 선언한 변수 name은 전역객체의 프로퍼티가 된다. `magic()`을 실행하면 함수 내부의 **this** 는 전역객체를 가리키고, 앞서 선언한 변수 name의 값인 `Harry Potter`를 출력한다.
+var로 선언한 변수 name은 전역객체의 프로퍼티가 된다. `callByName()`을 실행하면 함수 내부의 **this** 는 전역객체를 가리키고, 앞서 선언한 변수 name의 값인 `Harry Potter`를 출력한다.
 
 그러나 `magician.method()`로 실행한 함수에서의 **this** 는 magician 객체가 된다. 객체 내부의 프로퍼티 명 name을 찾아 그 값을 출력한다.
 
@@ -156,12 +156,13 @@ magician["method"](); // Hermione
 ```js
 const name = "Harry Potter";
 
-function magic() {
+function callByName() {
   console.log(this.name);
 }
 
-magic();
-console.log(this); // Window {0: global, window: Window, self: Window, document: document, location: Location, customElements: CustomElementRegistry, …}
+callByName();
+console.log(this);
+// Window {0: global, window: Window, self: Window, …}
 ```
 
 부연 설명으로
@@ -185,11 +186,11 @@ const, let으로 선언된 변수는 전역 객체의 프로퍼티가 되지 않
 ```js
 var name = "Harry Potter";
 
-function magic() {
+function callByName() {
   console.log(this.name);
 }
 
-magic(); // Harry Potter
+callByName(); // Harry Potter
 ```
 
 함수를 그 자체로 호출하면 모든 **this** 는 전역객체를 나타낸다.
@@ -266,7 +267,7 @@ var magic2 = {
       magicBB: function () {
       console.log(this);  // {magicBB: ƒ}  (=== magic2)
     };,
-    }
+}
 ```
 
 **this** 는 magic2 객체를 가리킨다. 메서드로서의 호출 방식이기 때문이다.
@@ -390,10 +391,13 @@ const b = new Magician("Hermione", 8);
 const c = new Magician("Ron", 4);
 
 console.log(a, b, c);
+
 /*
+
 magician {name: 'Harry', power: 10},
 magician {name: 'Hermione', power: 8},
 magician {name: 'Ron', power: 4}
+
 */
 ```
 
@@ -625,9 +629,13 @@ nodeArr.forEach(function (node) {
   console.log(node);
 });
 
-// <div>test</div>
-// <div>test2</div>
-// <div>test3</div>
+/*
+
+ <div>test</div>
+ <div>test2</div>
+ <div>test3</div>
+
+ */
 ```
 
 <br>
@@ -658,25 +666,32 @@ console.log(arr); // ['Harry', 'Hermione', 'Ron']
 <br>
 
 ```js
-function Person(name, ability) {
+function CharactersOfKoei(name, ability) {
   this.name = name;
   this.ability = ability;
 }
 
 function ChiefOfStaff(name, ability, role) {
-  Person.call(this, name, ability);
+  CharactersOfKoei.call(this, name, ability);
   this.role = role;
 }
 
 function Emperor(name, ability, country) {
-  Person.apply(this, [name, ability]);
+  CharactersOfKoei.apply(this, [name, ability]);
   this.country = country;
 }
 
-console.log(new ChiefOfStaff("Zhuge Liang", 100, "Chancellor"));
-// {name: 'Zhuge Liang', ability: 100, role: 'Chancellor'}
-console.log(new Emperor("Liu Bei", 91, "China"));
-// {name: 'Liu Bei', ability: 91, country: 'China'}
+console.log(new ChiefOfStaff("Zhuge Liang", 100, "Premier"));
+// ChiefOfStaff {name: 'Zhuge Liang', ability: 100, role: 'Premier'}
+
+console.log(new ChiefOfStaff("Guan Yu", 99, "Major General"));
+//ChiefOfStaff {name: 'Guan Yu', ability: 99, role: 'Major General'}
+
+console.log(new Emperor("Liu Bei", 91, "Shu Han"));
+// Emperor {name: 'Liu Bei', ability: 91, country: 'Shu Han'}
+
+console.log(new Emperor("Cao Cao", 96, "Wei"));
+// Emperor {name: 'Cao Cao', ability: 96, country: 'Wei'}
 ```
 
 생성자 함수 내부에 다른 생성자와 중복되는 내용이 있을 경우, call / apply를 사용하면 간결한 코드 처리가 가능하다.
